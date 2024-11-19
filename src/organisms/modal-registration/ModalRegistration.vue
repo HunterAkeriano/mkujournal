@@ -13,6 +13,13 @@ const props = defineProps({
 
 const emit = defineEmits(['close', 'changeTypeModal'])
 const name = ref('')
+const surName = ref('')
+const weekDay = ref('')
+const email = ref('')
+const phoneNumber = ref('')
+const typeStudent = ref('')
+const password = ref('')
+const recPassword = ref('')
 
 function closeModal() {
   emit('close')
@@ -35,13 +42,18 @@ function changeTypeModal() {
     <template #content>
       <div class="registration-modal__inputs">
         <FormInput v-model="name" placeholder="Ім'я" />
-        <FormInput v-model="name" placeholder="Прізвище" />
-        <FormInput v-model="name" placeholder="Дата народження" />
-        <FormInput v-model="name" placeholder="Е-mail" />
-        <FormInput v-model="name" placeholder="Номер телефону" />
-        <FormInput v-model="name" placeholder="Факультет" />
-        <FormInput v-model="name" placeholder="Пароль" />
-        <FormInput v-model="name" placeholder="Підтвердження паролю" />
+        <FormInput v-model="surName" placeholder="Прізвище" />
+        <FormInput v-model="weekDay" placeholder="Дата народження" />
+        <FormInput v-model="email" placeholder="Е-mail" />
+        <FormInput
+          v-model="phoneNumber"
+          is-phone
+          type="tel"
+          placeholder="Номер телефону"
+        />
+        <FormInput v-model="typeStudent" placeholder="Факультет" />
+        <FormInput v-model="password" placeholder="Пароль" />
+        <FormInput v-model="recPassword" placeholder="Підтвердження паролю" />
 
         <BaseButton
           clickable

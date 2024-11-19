@@ -1,7 +1,7 @@
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue'
+import { computed, ref } from 'vue'
+import { AsYouType } from 'libphonenumber-js/max'
 
-// Получаем проп для значения и событие для обновления
 const props = defineProps({
   modelValue: {
     type: String,
@@ -11,19 +11,60 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  type: {
+    type: String,
+    default: 'text',
+  },
+  isPhone: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const emit = defineEmits(['update:modelValue'])
 
 const focusInput = ref(false)
 
-const onInput = (event) => {
-  emit('update:modelValue', event.target.value)
-}
+const inputValue = computed({
+  get() {
+    return props.modelValue
+  },
+  set(next) {
+    emit('update:modelValue', next)
+  },
+})
 
 function checkValue() {
-  if (props.modelValue.length) return
+  if (props.isPhone && inputValue.value === '+') {
+    inputValue.value = ''
+    focusInput.value = false
+    return
+  }
+
+  if (inputValue.value.length) return
   focusInput.value = false
+}
+
+function focusedInput() {
+  focusInput.value = true
+  if (props.isPhone && !inputValue.value) {
+    inputValue.value = '+'
+  }
+}
+
+function onInput(event) {
+  const input = event.target
+
+  if (props.isPhone) {
+    if (input.value.startsWith('+') && input.value.indexOf('+', 1) !== -1) {
+      input.value = input.value.replace(/\+/g, '').replace(/^/, '+')
+    } else if (!input.value.startsWith('+')) {
+      inputValue.value = '+' + input.value
+      return
+    }
+
+    inputValue.value = new AsYouType().input(input.value)
+  }
 }
 </script>
 
@@ -38,10 +79,10 @@ function checkValue() {
 
     <input
       class="form-input__input"
-      type="text"
-      :value="props.modelValue"
+      :type="props.type"
+      :value="inputValue"
       @input="onInput"
-      @focus="focusInput = true"
+      @focus="focusedInput"
       @blur="checkValue"
     />
     <span class="form-input__required">*</span>

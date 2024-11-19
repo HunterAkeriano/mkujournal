@@ -22,7 +22,7 @@ function changeTypeModal() {
         </BaseButton>
 
         <div class="header__logo">
-          <img src="../../assets/img/logo.svg" alt="" />
+          <img src="@/assets/img/logo.svg" alt="" />
         </div>
 
         <div class="header__btn">
