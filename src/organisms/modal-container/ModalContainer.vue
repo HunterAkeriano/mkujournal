@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup>
 import { useModalStorage } from '@/plugin/stores/modal-storage'
 import { ref } from 'vue'
 
