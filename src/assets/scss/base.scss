@@ -1,4 +1,4 @@
-@use "@/assets/scss/variables/colors" as colors;
+@import 'variables/colors.scss';
 
 html {
   line-height: 1.15;
@@ -218,9 +218,9 @@ body {
 }
 
 body {
-  font-family: "Montserrat Alternates", sans-serif;
+  font-family: 'Montserrat Alternates', sans-serif;
   font-size: 16px;
-  background: colors.$pink-10;
+  background: $pink-10;
   margin: 0;
   padding: 0;
 }

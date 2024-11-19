@@ -1,0 +1,255 @@
+@use 'sass:math';
+@import '@/assets/scss/media-breakpoints.scss';
+@import '@/assets/scss/variables/colors.scss';
+
+$fade-transition-duration: 0.2 * 3;
+
+.base-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  background: transparent-color($black, 0.8);
+  overflow: auto;
+  pointer-events: auto;
+
+  &__wrapper {
+    padding: 30px;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__container {
+    position: relative;
+    display: grid;
+    align-items: center;
+    justify-self: center;
+    width: 100%;
+    border-radius: 18px 18px 15px 15px;
+    max-width: 500px;
+    box-shadow: 0 4px 10px transparent-color($black, 0.25);
+    border: none;
+
+    &_background-light {
+      background: white;
+    }
+
+    &_background-white {
+      background: white;
+    }
+
+    &_background-transparent {
+      background: rgb(0 0 0 / 0%);
+    }
+
+    .base-modal_size-xs & {
+      max-width: 480px;
+    }
+
+    .base-modal_size-sm & {
+      max-width: 502px;
+    }
+
+    .base-modal_size-md & {
+      max-width: 702px;
+    }
+
+    .base-modal_size-lg & {
+      max-width: 992px;
+    }
+
+    .base-modal_size-xl & {
+      max-width: 30px;
+    }
+
+    .base-modal_size-full & {
+      //max-width: $modal-full-max-width;
+    }
+  }
+
+  &__close {
+    position: absolute;
+    bottom: calc(100% + 13px);
+    right: 0;
+    display: flex;
+    padding: 10px;
+    margin: -10px;
+    cursor: pointer;
+    fill: white;
+
+    &_inside {
+      bottom: unset;
+      top: 10px;
+      right: 15px;
+    }
+
+    //&_background-transparent {
+    //  fill: $white;
+    //}
+
+    &-icon {
+      width: 15px;
+      height: 15px;
+    }
+  }
+
+  &__header {
+    padding: 10px;
+    background-color: $black;
+    color: white;
+    border-radius: 15px 15px 0 0;
+    text-align: center;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 28px;
+    //text-transform: uppercase;
+  }
+
+  &__content {
+    display: grid;
+    align-items: center;
+    padding: 45px 50px;
+    justify-self: center;
+    width: 100%;
+
+    &_bg-img {
+      background: #ffffffe6;
+      box-shadow: 0 0 20px 1px #8080801f;
+    }
+
+    &_no-padding {
+      padding: 0;
+    }
+
+    .base-modal_hide-overflow & {
+      overflow: hidden;
+    }
+
+    &-inner {
+      text-align: center;
+      font-size: 17px;
+      line-height: 22px;
+    }
+
+    @include media-breakpoint-down(md) {
+      padding: 30px 25px;
+
+      &_no-padding {
+        padding: 0;
+      }
+    }
+
+    &_unsaved-changes {
+      padding: 35px 50px;
+
+      @include media-breakpoint-down(md) {
+        padding: 30px 25px;
+      }
+    }
+
+    .base-modal_size-full & {
+      //max-width: $modal-full-max-width;
+      padding: 60px;
+
+      @include media-breakpoint-down(sm) {
+        padding: 40px;
+      }
+
+      @include media-breakpoint-down(xs) {
+        padding: 40px 0;
+      }
+    }
+  }
+
+  &__footer {
+    padding: 10px;
+    color: $black;
+    border-radius: 0 0 15px 15px;
+    //text-align: center;
+    //font-weight: 500;
+    //font-size: 22px;
+    //line-height: 28px;
+    //text-transform: uppercase;
+  }
+
+  &__controls {
+    display: flex;
+    grid-gap: 20px;
+    grid-auto-flow: column;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  &_error &__header {
+    background-color: #fa8072;
+  }
+
+  &_no-bottom-padding {
+    .base-modal {
+      &__container {
+        padding-bottom: 10px;
+      }
+    }
+  }
+}
+
+.modals {
+  &-enter-active,
+  &-leave-active {
+    transition: //filter $fade-transition-duration ease,
+      opacity $fade-transition-duration ease;
+
+    .base-modal {
+      &__container {
+        //overflow: hidden;
+        transition: transform math.div($fade-transition-duration, 1.2) ease;
+      }
+
+      &__header {
+        transition: transform $fade-transition-duration ease;
+      }
+
+      &__content {
+        transition: transform $fade-transition-duration ease;
+      }
+
+      &__footer {
+        transition: transform $fade-transition-duration ease;
+      }
+    }
+  }
+
+  &-leave-active {
+    pointer-events: none;
+
+    .base-modal {
+      &__container {
+        pointer-events: all;
+      }
+    }
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    backdrop-filter: blur(0);
+
+    .base-modal {
+      &__container {
+        transform: translateY(-300px);
+      }
+
+      &__header {
+        transform: translateY(-80px);
+      }
+
+      &__content {
+        transform: translateY(-120px);
+      }
+    }
+  }
+}

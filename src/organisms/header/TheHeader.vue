@@ -1,9 +1,10 @@
 <script setup>
 import BaseButton from '@/molecules/base-button/BaseButton.vue'
 import ModalContainer from '@/atom/modal-container/ModalContainer.vue'
-import { useToggleModal } from '@/atom/toggle-modal/toggle-modal.js'
+import { useToggleModal } from '@/molecules/toggle-modal/toggle-modal.js'
+import ModalRegistration from '@/organisms/modal-registration/ModalRegistration.vue'
 
-const loginModal = useToggleModal()
+const registrationModal = useToggleModal()
 </script>
 
 <template>
@@ -20,7 +21,11 @@ const loginModal = useToggleModal()
 
         <div class="header__btn">
           <BaseButton clickable class="header__btn-item"> Вхід </BaseButton>
-          <BaseButton clickable class="header__btn-item">
+          <BaseButton
+            clickable
+            class="header__btn-item"
+            @click="registrationModal.open"
+          >
             Реєстрація
           </BaseButton>
         </div>
@@ -30,7 +35,10 @@ const loginModal = useToggleModal()
 
   <ModalContainer>
     <template #default="{ modalIndex }">
-      <span v-if="loginModal.item">sadasdas</span>
+      <ModalRegistration
+        v-if="registrationModal.item"
+        :modal-index="modalIndex"
+      />
     </template>
   </ModalContainer>
 </template>
