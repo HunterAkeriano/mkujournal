@@ -1,6 +1,6 @@
 <script setup>
 import BaseButton from '@/molecules/base-button/BaseButton.vue'
-import ModalContainer from '@/organisms/modal-container/ModalContainer.vue'
+import ModalContainer from '@/atom/modal-container/ModalContainer.vue'
 import { useToggleModal } from '@/atom/toggle-modal/toggle-modal.js'
 
 const loginModal = useToggleModal()

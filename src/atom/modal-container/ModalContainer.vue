@@ -1,5 +1,5 @@
 <script setup>
-import { useModalStorage } from '@/plugin/stores/modal-storage'
+import { useModalStorage } from '@/plugin/stores/modal-storage.js'
 import { ref } from 'vue'
 
 const modalStorage = useModalStorage()
