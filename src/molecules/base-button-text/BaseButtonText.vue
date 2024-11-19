@@ -52,6 +52,6 @@ function onClick(event) {
   </Component>
 </template>
 
-<style scoped lang="scss">
-@import 'BaseButton';
+<style scoped>
+@import 'BaseButtonText.scss';
 </style>

@@ -6,6 +6,10 @@ $pink-20: #9747FF;
 
 // black
 $black: #010605;
+$black-20: #807F7F;
+
+// white
+$white: #fff;
 
 @function transparent-color($color, $transparency) {
   $red: color.red($color);

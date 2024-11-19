@@ -1,4 +1,13 @@
+@import "@/assets/scss/variables/colors";
+
 .base-button {
+  background: $black;
+  border-radius: 40px;
+  padding: 10px;
+  color: $white;
+  font-weight: 700;
+  text-align: center;
+
   &_clickable {
     cursor: pointer;
   }

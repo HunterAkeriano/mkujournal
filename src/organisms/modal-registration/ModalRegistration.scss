@@ -1,3 +1,28 @@
+@import "@/assets/scss/variables/colors";
 .registration-modal {
   width: 100%;
+
+  &__inputs {
+    padding: 20px 0;
+    max-width: 370px;
+    margin: 0 auto;
+  }
+
+  &__btn {
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  &__login {
+    display: block;
+    font-weight: 700;
+    font-size: 16px;
+    color: $black-20;
+    margin: 20px auto 0 auto;
+    width: fit-content;
+
+    span {
+      color: $pink-20
+    }
+  }
 }

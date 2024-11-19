@@ -1,10 +1,16 @@
 <script setup>
-import BaseButton from '@/molecules/base-button/BaseButton.vue'
+import BaseButton from '@/molecules/base-button-text/BaseButtonText.vue'
 import ModalContainer from '@/atom/modal-container/ModalContainer.vue'
 import { useToggleModal } from '@/molecules/toggle-modal/toggle-modal.js'
 import ModalRegistration from '@/organisms/modal-registration/ModalRegistration.vue'
 
 const registrationModal = useToggleModal()
+
+function changeTypeModal() {
+  //todo: add modal login
+
+  registrationModal.close()
+}
 </script>
 
 <template>
@@ -38,6 +44,7 @@ const registrationModal = useToggleModal()
       <ModalRegistration
         v-if="registrationModal.item"
         :modal-index="modalIndex"
+        @change-type-modal="changeTypeModal"
       />
     </template>
   </ModalContainer>
