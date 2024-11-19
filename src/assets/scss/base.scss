@@ -248,3 +248,17 @@ input::-ms-clear {
   margin: 0 auto;
   width: 100%;
 }
+
+#modals {
+  z-index: 1;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}

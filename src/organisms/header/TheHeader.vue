@@ -16,7 +16,7 @@ const registrationModal = useToggleModal()
         </BaseButton>
 
         <div class="header__logo">
-          <img src="@/assets/logo.svg" alt="" />
+          <img src="../../assets/img/logo.svg" alt="" />
         </div>
 
         <div class="header__btn">

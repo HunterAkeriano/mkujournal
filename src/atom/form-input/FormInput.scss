@@ -1,0 +1,13 @@
+@import "@/assets/scss/variables/colors";
+
+.form-input {
+  &__input {
+    background: unset;
+    border-bottom:  3px solid $black;
+    padding-bottom: 2px;
+  }
+
+  &__required {
+    color: $pink-20
+  }
+}

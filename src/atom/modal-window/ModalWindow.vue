@@ -25,6 +25,10 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  isRegistration: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const emit = defineEmits(['close'])
@@ -73,13 +77,19 @@ function close(hard = false) {
     :style="{
       zIndex: props.modalIndex,
     }"
+    :class="{
+      [`base-modal_size-${props.size}`]: true,
+      [`base-modal_hide-overflow`]: hideOverflow,
+    }"
     class="base-modal"
     @pointerdown="onPointerdown($event, false)"
   >
     <div class="base-modal__wrapper">
       <dialog
         :class="{
+          [`base-modal_size-${props.size}`]: true,
           [`base-modal__container_background-${props.background}`]: true,
+          [`base-modal_hide-overflow`]: hideOverflow,
         }"
         class="base-modal__container"
         @click="onDialogClick($event)"
@@ -96,15 +106,24 @@ function close(hard = false) {
           @pointerdown="onPointerdown($event, true)"
           @pointerup="resetContentClickValue"
         >
-          <slot
-            :enable-overflow="enableOverflow"
-            :disable-overflow="disableOverflow"
-            name="content"
-          >
-            <div class="base-modal__content-inner">
-              <slot name="content-inner" />
-            </div>
-          </slot>
+          <img
+            v-if="props.isRegistration"
+            class="base-modal__content-bg"
+            src="@/assets/img/modal-registration.webp"
+            alt="user-bg"
+          />
+
+          <div class="base-modal__content-text">
+            <slot
+              :enable-overflow="enableOverflow"
+              :disable-overflow="disableOverflow"
+              name="content"
+            >
+              <div class="base-modal__content-inner">
+                <slot name="content-inner" />
+              </div>
+            </slot>
+          </div>
 
           <div v-if="$slots.footer" class="base-modal__footer">
             <slot name="footer" />
@@ -115,6 +134,6 @@ function close(hard = false) {
   </Component>
 </template>
 
-<style scoped>
-@import '../modal-window/ModalWindow.scss';
+<style lang="scss" scoped>
+@import 'ModalWindow';
 </style>

@@ -1,14 +1,16 @@
 @use 'sass:color';
 // pink
 $pink-10: #e0deee;
+$pink-20: #9747FF;
+
 
 // black
 $black: #010605;
 
-//@function transparent-color($color, $transparency) {
-//  $red: color.red($color);
-//  $green: color.green($color);
-//  $blue: color.blue($color);
-//
-//  @return rgba($red, $green, $blue, $transparency);
-//}
+@function transparent-color($color, $transparency) {
+  $red: color.red($color);
+  $green: color.green($color);
+  $blue: color.blue($color);
+
+  @return rgba($red, $green, $blue, $transparency);
+}
