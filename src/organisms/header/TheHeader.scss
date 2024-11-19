@@ -1,0 +1,20 @@
+.header {
+  font-size: 14px;
+  font-weight: 500;
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__logo {
+    transform: translateY(20px);
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+}
