@@ -1,17 +1,16 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-// import { useScrollLock } from '@/shared/lib'
+import { useScrollLock } from '@/molecules/scroll-lock/scroll-lock.js'
 
 export const useModalStorage = defineStore('modal', () => {
-  // const { lockScroll, unlockScroll } = useScrollLock()
+  const { lockScroll, unlockScroll } = useScrollLock()
 
   const indexCounter = ref(0)
   let openedModalsCount = 0
 
   function open() {
     if (openedModalsCount === 0) {
-      // lockScroll()
-      console.log('modal opened')
+      lockScroll()
     }
 
     openedModalsCount++
@@ -26,8 +25,7 @@ export const useModalStorage = defineStore('modal', () => {
       openedModalsCount = 0
       indexCounter.value = 0
 
-      // unlockScroll()
-      console.log('modal closed')
+      unlockScroll()
     }
   }
 
