@@ -1,5 +1,9 @@
 <script setup>
 import BaseButton from '@/molecules/base-button/BaseButton.vue'
+import ModalContainer from '@/organisms/modal-container/ModalContainer.vue'
+import { useToggleModal } from '@/atom/toggle-modal/toggle-modal.js'
+
+const loginModal = useToggleModal()
 </script>
 
 <template>
@@ -23,6 +27,12 @@ import BaseButton from '@/molecules/base-button/BaseButton.vue'
       </div>
     </div>
   </header>
+
+  <ModalContainer>
+    <template #default="{ modalIndex }">
+      <span v-if="loginModal.item">sadasdas</span>
+    </template>
+  </ModalContainer>
 </template>
 
 <style scoped>
