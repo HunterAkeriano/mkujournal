@@ -1,0 +1,145 @@
+@import "@/assets/scss/variables/colors";
+
+.form-datepicker {
+  fill: #f5f5f5;
+  transition: fill ease 0.2s;
+
+  &__close {
+    width: 18px;
+    height: 18px;
+  }
+
+  &__deselect {
+    &-icon {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &_active {
+    fill: #ced4da;
+
+    .form-datepicker__deselect {
+      display: none;
+    }
+  }
+
+  &_disabled {
+    fill: #efefef;
+    pointer-events: none;
+    user-select: none;
+
+    input {
+      color: #777777;
+    }
+  }
+
+  &_none-caret {
+    .form-field__container {
+      position: unset;
+    }
+
+    .vc-popover-content {
+      .vc-popover-caret {
+        display: none;
+      }
+    }
+  }
+
+  &__component {
+    .is-today {
+      .vc-day-content {
+        position: relative;
+
+        &:after {
+          content: '';
+          background: var(--vc-gray-200);
+          width: 90%;
+          height: 90%;
+          position: absolute;
+          border-radius: 100%;
+          z-index: -5;
+        }
+      }
+    }
+  }
+
+  &__field {
+    &-content {
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    &-container {
+    }
+
+    &-placeholder {
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+      left: 0;
+      top: -5px;
+      font-size: 18px;
+      font-weight: 700;
+      color: $black-20;
+      transition: all .5s ease;
+
+      &_focus {
+        transform: translateY(-22px) translateZ(0);
+        -webkit-transform: translateY(-22px) translateZ(0);
+        font-size: 13px;
+        color: #5b5b5b;
+        width: 93%;
+        height: 26px;
+        padding-top: 12px;
+        z-index: 0;
+      }
+    }
+
+    &-required {
+      color: $pink-20
+    }
+
+    &-input {
+      width: 100%;
+      height: 100%;
+      background: rgb(0 0 0 / 0%);
+      border: none;
+      font-size: 16px;
+      line-height: 19px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: unset;
+      border-bottom:  3px solid $black;
+      padding-bottom: 2px;
+      font-weight: 500;
+
+      &::placeholder {
+        font-size: 18px;
+        font-weight: 700;
+        color: $black-20;
+      }
+
+      &_success {
+        color: #38c66f;
+      }
+
+      &_warning {
+        color: #f0ad4e;
+      }
+
+      &_danger {
+        color: #ff5d55;
+      }
+    }
+
+    &-icon {
+      &-component {
+        width: 22px;
+        height: 22px;
+      }
+    }
+  }
+}

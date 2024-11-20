@@ -64,7 +64,10 @@ function onInput(event) {
     }
 
     inputValue.value = new AsYouType().input(input.value)
+    return
   }
+
+  inputValue.value = input.value
 }
 </script>
 

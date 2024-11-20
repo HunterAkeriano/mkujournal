@@ -4,6 +4,7 @@ import FormInput from '@/atom/form-input/FormInput.vue'
 import { ref } from 'vue'
 import BaseButton from '@/molecules/base-button/BaseButton.vue'
 import BaseButtonText from '@/molecules/base-button-text/BaseButtonText.vue'
+import FormDatepicker from '@/atom/form-datepicker/FormDatepicker.vue'
 
 const props = defineProps({
   modalIndex: {
@@ -14,7 +15,7 @@ const props = defineProps({
 const emit = defineEmits(['close', 'changeTypeModal'])
 const name = ref('')
 const surName = ref('')
-const weekDay = ref('')
+const weekDay = ref(null)
 const email = ref('')
 const phoneNumber = ref('')
 const typeStudent = ref('')
@@ -43,7 +44,12 @@ function changeTypeModal() {
       <div class="registration-modal__inputs">
         <FormInput v-model="name" placeholder="Ім'я" />
         <FormInput v-model="surName" placeholder="Прізвище" />
-        <FormInput v-model="weekDay" placeholder="Дата народження" />
+        <FormDatepicker
+          v-model="weekDay"
+          is-datepicker
+          mode="date"
+          placeholder="Дата народження"
+        />
         <FormInput v-model="email" placeholder="Е-mail" />
         <FormInput
           v-model="phoneNumber"
@@ -52,8 +58,12 @@ function changeTypeModal() {
           placeholder="Номер телефону"
         />
         <FormInput v-model="typeStudent" placeholder="Факультет" />
-        <FormInput v-model="password" placeholder="Пароль" />
-        <FormInput v-model="recPassword" placeholder="Підтвердження паролю" />
+        <FormInput v-model="password" type="password" placeholder="Пароль" />
+        <FormInput
+          v-model="recPassword"
+          type="password"
+          placeholder="Підтвердження паролю"
+        />
 
         <BaseButton
           clickable
