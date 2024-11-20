@@ -1,5 +1,9 @@
-<script setup></script>
+<script setup>
+import MainScene from '@/organisms/main-page/main-scene/MainScene.vue'
+</script>
 
 <template>
-  <main>pidor</main>
+  <main>
+    <MainScene />
+  </main>
 </template>

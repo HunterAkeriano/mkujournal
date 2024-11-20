@@ -1,0 +1,47 @@
+@import "@/assets/scss/variables/colors";
+@import "@/assets/scss/media-breakpoints";
+
+.main-scene {
+
+  &__title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 64px;
+    max-width: 700px;
+    text-transform: uppercase;
+    margin-top: 50px;
+
+    @include media-breakpoint-down(lg) {
+      font-size: 48px;
+      max-width: 600px;
+    }
+
+    @include media-breakpoint-down(xs) {
+      font-size: 32px;
+    }
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    background: $pink-25;
+    padding: 30px 60px;
+    gap: 20px;
+
+    @include media-breakpoint-down(md) {
+      flex-direction: column;
+      padding: 20px 30px;
+    }
+
+    @include media-breakpoint-down(xs) {
+
+    }
+
+    &-img {
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}

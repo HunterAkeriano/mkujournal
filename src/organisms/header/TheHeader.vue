@@ -51,6 +51,6 @@ function changeTypeModal() {
   </ModalContainer>
 </template>
 
-<style scoped>
-@import 'TheHeader.scss';
+<style lang="scss" scoped>
+@import 'TheHeader';
 </style>
