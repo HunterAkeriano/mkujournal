@@ -3,13 +3,33 @@
 $pink-10: #e0deee;
 $pink-20: #9747FF;
 
+// gray
+$gray-10: #f5f5f5;
+$gray-35: #efefef;
+$gray-40: #ced4da;
+$gray-50: #b0b9bd;
+$gray-55: #c5c5c5;
+$gray-70: #777777;
+$gray-90: #6c6d72;
+$gray-100: #434655;
 
 // black
 $black: #010605;
+$black-15: #707070;
 $black-20: #807F7F;
+
 
 // white
 $white: #fff;
+
+
+// red
+$red-40: #ea5455;
+$red-55: #d9232a;
+$red-65: #a24448;
+
+// orange
+$orange-55: #ffb14e;
 
 @function transparent-color($color, $transparency) {
   $red: color.red($color);
