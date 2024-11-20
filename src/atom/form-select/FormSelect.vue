@@ -2,10 +2,11 @@
 import Popper from 'vue3-popper'
 import { computed, ref, watch } from 'vue'
 import { debounce } from '@/molecules/utils/debounce.js'
+import { sortAndStringify } from '@/molecules/utils/sort-stringify.js'
 
 const props = defineProps({
   modelValue: {
-    type: [String, Number],
+    type: [String, Number, Object],
     default: '',
   },
   reduce: {
@@ -23,6 +24,23 @@ const props = defineProps({
   options: {
     type: Array,
     default: undefined,
+  },
+  getOptionLabel: {
+    type: Function,
+    default: undefined,
+  },
+  getOptionKey: {
+    type: Function,
+    default: (option) => {
+      if (option === null || option === undefined) {
+        console.warn("Incorrect option, can't get key, ", option)
+        return JSON.stringify(option)
+      }
+      if (typeof option === 'object') {
+        return 'id' in option ? option.id : sortAndStringify(option)
+      }
+      return option
+    },
   },
 })
 
@@ -48,7 +66,6 @@ const searchOptions = debounce((values) => {
 })
 
 const showOptions = ref(false)
-const daun = [1, 2, 3, 4, 5, 7]
 
 watch(showOptions, () => {
   if (search.value === '') {
@@ -85,9 +102,21 @@ const hasSelected = computed(() => {
   )
 })
 
+function getOptionLabelByProps(option) {
+  if (props.getOptionLabel) {
+    return props.getOptionLabel(option)
+  }
+
+  if (option !== null && typeof option === 'object') {
+    return option[props.label || '']
+  }
+
+  return option
+}
+
 const selectedOptionPreview = computed(() => {
   const [option] = selectedOptions.value
-  return option
+  return getOptionLabelByProps(option)
 })
 
 function onFocus() {
@@ -167,7 +196,7 @@ function blur() {
             v-for="option in props.options"
             @click="onOptionClick(option)"
           >
-            {{ getReducedOptionByProps(option) }}
+            {{ getOptionLabelByProps(option) }}
           </div>
         </div>
       </template>
