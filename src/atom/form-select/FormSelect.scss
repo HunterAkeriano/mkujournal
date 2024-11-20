@@ -1,6 +1,8 @@
 @import "@/assets/scss/variables/colors";
 
 .form-select {
+  --form-select-max-height: 350px;
+
   display: grid;
   position: relative;
   cursor: pointer;

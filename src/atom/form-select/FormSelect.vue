@@ -20,6 +20,10 @@ const props = defineProps({
     type: String,
     default: undefined,
   },
+  options: {
+    type: Array,
+    default: undefined,
+  },
 })
 
 const search = ref('')
@@ -160,7 +164,7 @@ function blur() {
         <div class="form-select__dropdown" @pointerdown.prevent.stop>
           <div
             class="form-select__option"
-            v-for="option in daun"
+            v-for="option in props.options"
             @click="onOptionClick(option)"
           >
             {{ getReducedOptionByProps(option) }}

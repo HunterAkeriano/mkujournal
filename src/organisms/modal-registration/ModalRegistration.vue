@@ -5,7 +5,7 @@ import { ref } from 'vue'
 import BaseButton from '@/molecules/base-button/BaseButton.vue'
 import BaseButtonText from '@/molecules/base-button-text/BaseButtonText.vue'
 import FormDatepicker from '@/atom/form-datepicker/FormDatepicker.vue'
-import FormSelect from '@/atom/form-select/FormSelect.vue'
+import UniversitySelect from '@/atom/university-select/UniversitySelect.vue'
 
 const props = defineProps({
   modalIndex: {
@@ -59,7 +59,7 @@ function changeTypeModal() {
           placeholder="Номер телефону"
         />
 
-        <FormSelect v-model="typeStudent" placeholder="Факультет" />
+        <UniversitySelect v-model="typeStudent" />
 
         <FormInput v-model="password" type="password" placeholder="Пароль" />
 
