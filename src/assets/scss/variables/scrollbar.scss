@@ -1,0 +1,31 @@
+@import "./colors";
+
+@mixin firefox-scrollbar {
+  scrollbar-color: $pink-20 $pink-10;
+  scrollbar-width: thin;
+}
+
+@mixin scrollbar {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 8px;
+    background-color: $pink-20;
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: $pink-20;
+    border-radius: 8px;
+    border: 2px solid $pink-20;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: $pink-20;
+  }
+
+  /* Firefox */
+  @include firefox-scrollbar;
+}

@@ -187,6 +187,8 @@ function blur() {
             </slot>
           </div>
         </div>
+
+        <div class="form-select__actions"></div>
       </div>
 
       <template #content>
