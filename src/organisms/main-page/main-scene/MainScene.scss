@@ -37,6 +37,27 @@
 
     }
 
+    &-card {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 45px;
+
+      .base-user-card {
+        max-width: 300px;
+
+        &:nth-child(1) {
+          max-width: 250px;
+        }
+      }
+
+      .card {
+
+        color: white;
+        font-weight: 700;
+        padding: 36px;
+      }
+    }
+
     &-img {
       img {
         width: 100%;

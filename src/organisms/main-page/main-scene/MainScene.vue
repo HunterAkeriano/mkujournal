@@ -1,4 +1,7 @@
-<script setup></script>
+<script setup>
+import BaseCard from '@/atom/base-card/BaseCard.vue'
+import BaseButtonText from '@/molecules/base-button-text/BaseButtonText.vue'
+</script>
 
 <template>
   <div class="main-scene">
@@ -6,6 +9,36 @@
       <div class="main-scene__wrapper">
         <div class="main-scene__wrapper-info">
           <h1 class="main-scene__title">все навчання у твоєму пристрої</h1>
+
+          <div class="main-scene__wrapper-card">
+            <BaseCard bg-color="pink" class="base-user-card">
+              <template #content>
+                <div class="card">
+                  <BaseButtonText
+                    tag="a"
+                    href="https://t.me/+j1KtnnpqtAM5OGEy"
+                    target="_blank"
+                  >
+                    приєднуйся до нашої спільноти зараз
+                  </BaseButtonText>
+                </div>
+              </template>
+            </BaseCard>
+
+            <BaseCard bg-color="pink" class="base-user-card">
+              <template #content>
+                <div class="card">
+                  <BaseButtonText
+                    tag="a"
+                    href="https://moodle.mku.edu.ua/login/index.php"
+                    target="_blank"
+                  >
+                    продовжуй навчання
+                  </BaseButtonText>
+                </div>
+              </template>
+            </BaseCard>
+          </div>
         </div>
 
         <div class="main-scene__wrapper-img">
