@@ -147,6 +147,25 @@ function onOptionClick(option) {
 function blur() {
   inputRef.value?.blur()
 }
+
+function checkAreOptionsEqual(a, b) {
+  if (a === null || b === null || a === undefined || b === undefined) {
+    return false
+  }
+
+  const aKey = props.getOptionKey(a)
+  const bKey = props.getOptionKey(b)
+  return aKey === bKey
+}
+
+function checkIsOptionSelected(option) {
+  return selectedOptions.value.some((item) =>
+    checkAreOptionsEqual(
+      getReducedOptionByProps(item),
+      getReducedOptionByProps(option)
+    )
+  )
+}
 </script>
 
 <template>
@@ -194,6 +213,9 @@ function blur() {
       <template #content>
         <div class="form-select__dropdown" @pointerdown.prevent.stop>
           <div
+            :class="{
+              'form-select__option_selected': checkIsOptionSelected(option),
+            }"
             class="form-select__option"
             v-for="option in props.options"
             @click="onOptionClick(option)"
