@@ -44,6 +44,7 @@ function changeTypeModal() {
       <ModalRegistration
         v-if="registrationModal.item"
         :modal-index="modalIndex"
+        @close="registrationModal.close"
         @change-type-modal="changeTypeModal"
       />
     </template>
