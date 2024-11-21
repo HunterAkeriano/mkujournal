@@ -81,13 +81,15 @@ function onInput(event) {
     </span>
 
     <input
-      class="form-input__input"
       :type="props.type"
       :value="inputValue"
+      :class="{ [`form-input__input_${props.type}`]: true }"
+      class="form-input__input"
       @input="onInput"
       @focus="focusedInput"
       @blur="checkValue"
     />
+
     <span class="form-input__required">*</span>
   </div>
 </template>

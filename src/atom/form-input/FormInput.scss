@@ -36,6 +36,11 @@
     padding-bottom: 2px;
     width: 100%;
     font-weight: 500;
+
+    &_password,
+    &_text{
+      padding-right: 30px;
+    }
   }
 
   &__required {

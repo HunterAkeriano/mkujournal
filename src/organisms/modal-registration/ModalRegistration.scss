@@ -64,6 +64,22 @@
     width: 100%;
   }
 
+  &__registration-password {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+      svg {
+        position: absolute;
+        right: 10px;
+        top: -5px;
+        width: 23px;
+        height: 23px;
+        cursor: pointer;
+        stroke: $black;
+      }
+  }
+
   &__login {
     display: block;
     font-weight: 700;

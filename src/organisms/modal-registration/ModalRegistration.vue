@@ -6,6 +6,7 @@ import BaseButton from '@/molecules/base-button/BaseButton.vue'
 import BaseButtonText from '@/molecules/base-button-text/BaseButtonText.vue'
 import FormDatepicker from '@/atom/form-datepicker/FormDatepicker.vue'
 import UniversitySelect from '@/atom/university-select/UniversitySelect.vue'
+import BaseIcon from '@/molecules/base-icon/BaseIcon.vue'
 
 const props = defineProps({
   modalIndex: {
@@ -14,6 +15,9 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['close', 'changeTypeModal'])
+const isPasswordType = ref(true)
+const isPasswordTypeRecover = ref(true)
+
 const name = ref('')
 const surName = ref('')
 const weekDay = ref(null)
@@ -41,6 +45,7 @@ function changeTypeModal() {
     @close="closeModal"
   >
     <template #header> РЕЄСТРАЦІЯ </template>
+
     <template #content>
       <div class="registration-modal__teacher">
         <img src="@/assets/img/modal/modal-teacher.png" alt="teacher" />
@@ -69,13 +74,32 @@ function changeTypeModal() {
 
         <UniversitySelect v-model="typeStudent" />
 
-        <FormInput v-model="password" type="password" placeholder="Пароль" />
+        <div class="registration-modal__registration-password">
+          <FormInput
+            v-model="password"
+            :type="isPasswordType ? 'password' : 'text'"
+            placeholder="Пароль"
+          />
+          <BaseIcon
+            :icon="isPasswordType ? 'icon-eye-closed' : 'icon-eye'"
+            class="form-input__icon"
+            @click="isPasswordType = !isPasswordType"
+          />
+        </div>
 
-        <FormInput
-          v-model="recPassword"
-          type="password"
-          placeholder="Підтвердження паролю"
-        />
+        <div class="registration-modal__registration-password">
+          <FormInput
+            v-model="recPassword"
+            :type="isPasswordTypeRecover ? 'password' : 'text'"
+            placeholder="Підтвердження паролю"
+          />
+
+          <BaseIcon
+            :icon="isPasswordTypeRecover ? 'icon-eye-closed' : 'icon-eye'"
+            class="form-input__icon"
+            @click="isPasswordTypeRecover = !isPasswordTypeRecover"
+          />
+        </div>
 
         <BaseButton
           clickable
