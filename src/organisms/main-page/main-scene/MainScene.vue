@@ -1,6 +1,7 @@
 <script setup>
 import BaseCard from '@/atom/base-card/BaseCard.vue'
 import BaseButtonText from '@/molecules/base-button-text/BaseButtonText.vue'
+import BaseIcon from '@/molecules/base-icon/BaseIcon.vue'
 </script>
 
 <template>
@@ -24,6 +25,11 @@ import BaseButtonText from '@/molecules/base-button-text/BaseButtonText.vue'
                 </div>
               </template>
             </BaseCard>
+
+            <div class="main-scene__wrapper-or">
+              АБО
+              <img src="@/assets/img/main/line.png" alt="line" />
+            </div>
 
             <BaseCard bg-color="pink" class="base-user-card">
               <template #content>
