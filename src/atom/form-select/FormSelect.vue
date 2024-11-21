@@ -266,6 +266,10 @@ function checkIsOptionSelected(option) {
         </div>
       </template>
     </Popper>
+
+    <div class="form-select__error" v-if="initialError">
+      {{ initialError }}
+    </div>
   </div>
 </template>
 

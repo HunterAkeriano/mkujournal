@@ -75,7 +75,7 @@ function checkValue() {
     return
   }
 
-  if (inputValue.value.length) return
+  if (inputValue.value?.length) return
   focusInput.value = false
 }
 
