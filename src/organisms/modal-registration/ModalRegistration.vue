@@ -11,6 +11,7 @@ import { object, string, date } from 'yup'
 import { useForm } from 'vee-validate'
 import { validationEmail } from '@/molecules/utils/validation.js'
 import { isValidPhoneNumber } from 'libphonenumber-js/max'
+import { useToast } from 'vue-toastification'
 
 const props = defineProps({
   modalIndex: {
@@ -19,6 +20,8 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['close', 'changeTypeModal'])
+
+const toast = useToast()
 const isPasswordType = ref(true)
 const isPasswordTypeRecover = ref(true)
 
@@ -61,8 +64,9 @@ const { values, setFieldValue, resetForm, errors } = form
 
 async function closeModal() {
   const { valid } = await form.validate()
-  console.log(errors.value.course)
-  console.log(values.course)
+  if (!valid) {
+    toast.error('Заповніть всі поля форми')
+  }
 }
 
 const isFormValid = computed(() => {
