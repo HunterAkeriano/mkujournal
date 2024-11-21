@@ -1,6 +1,57 @@
 @import "@/assets/scss/variables/colors";
+@import "@/assets/scss/media-breakpoints";
+
 .registration-modal {
   width: 100%;
+
+  &__teacher {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    pointer-events: none;
+    user-select: none;
+
+    @include media-breakpoint-down(l) {
+      max-width:  250px;
+      max-height: 300px;
+      top: unset;
+      bottom: 0;
+    }
+
+    @include media-breakpoint-down(md) {
+      display: none;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__students {
+    position: absolute;
+    right: 0;
+    top: 60px;
+    pointer-events: none;
+    user-select: none;
+    max-width: 400px;
+
+    @include media-breakpoint-down(l) {
+      max-width:  250px;
+      top: unset;
+      bottom: 0;
+    }
+
+    @include media-breakpoint-down(md) {
+      display: none;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
 
   &__inputs {
     padding: 20px 0;

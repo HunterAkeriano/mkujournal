@@ -42,6 +42,10 @@ function changeTypeModal() {
   >
     <template #header> РЕЄСТРАЦІЯ </template>
     <template #content>
+      <div class="registration-modal__teacher">
+        <img src="@/assets/img/modal/modal-teacher.png" alt="teacher" />
+      </div>
+
       <div class="registration-modal__inputs">
         <FormInput v-model="name" placeholder="Ім'я" />
 
@@ -88,6 +92,10 @@ function changeTypeModal() {
         >
           Маєте аккаунт? <span>Увійти</span>
         </BaseButtonText>
+      </div>
+
+      <div class="registration-modal__students">
+        <img src="@/assets/img/modal/modal-students.png" alt="students" />
       </div>
     </template>
   </ModalWindow>
