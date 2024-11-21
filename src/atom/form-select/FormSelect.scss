@@ -92,4 +92,12 @@
       background: $pink-20;
     }
   }
+
+  &__not-item {
+    text-align: center;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 5px;
+    cursor: default;
+  }
 }

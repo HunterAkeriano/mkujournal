@@ -44,14 +44,18 @@ function changeTypeModal() {
     <template #content>
       <div class="registration-modal__inputs">
         <FormInput v-model="name" placeholder="Ім'я" />
+
         <FormInput v-model="surName" placeholder="Прізвище" />
+
         <FormDatepicker
           v-model="weekDay"
           is-datepicker
           mode="date"
           placeholder="Дата народження"
         />
+
         <FormInput v-model="email" placeholder="Е-mail" />
+
         <FormInput
           v-model="phoneNumber"
           is-phone

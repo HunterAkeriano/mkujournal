@@ -222,6 +222,10 @@ function checkIsOptionSelected(option) {
           >
             {{ getOptionLabelByProps(option) }}
           </div>
+
+          <div v-if="!props.options.length" class="form-select__not-item">
+            Елементів не знайдено
+          </div>
         </div>
       </template>
     </Popper>
