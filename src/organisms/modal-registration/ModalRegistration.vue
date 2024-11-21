@@ -1,12 +1,16 @@
 <script setup>
 import ModalWindow from '@/atom/modal-window/ModalWindow.vue'
 import FormInput from '@/atom/form-input/FormInput.vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import BaseButton from '@/molecules/base-button/BaseButton.vue'
 import BaseButtonText from '@/molecules/base-button-text/BaseButtonText.vue'
 import FormDatepicker from '@/atom/form-datepicker/FormDatepicker.vue'
 import UniversitySelect from '@/atom/university-select/UniversitySelect.vue'
 import BaseIcon from '@/molecules/base-icon/BaseIcon.vue'
+import { object, string, date } from 'yup'
+import { useForm } from 'vee-validate'
+import { validationEmail } from '@/molecules/utils/validation.js'
+import { isValidPhoneNumber } from 'libphonenumber-js/max'
 
 const props = defineProps({
   modalIndex: {
@@ -18,22 +22,51 @@ const emit = defineEmits(['close', 'changeTypeModal'])
 const isPasswordType = ref(true)
 const isPasswordTypeRecover = ref(true)
 
-const name = ref('')
-const surName = ref('')
-const weekDay = ref(null)
-const email = ref('')
-const phoneNumber = ref('')
-const typeStudent = ref('')
-const password = ref('')
-const recPassword = ref('')
-
-function closeModal() {
-  emit('close')
-}
-
 function changeTypeModal() {
   emit('changeTypeModal')
 }
+
+const schema = object({
+  name: string().min(1).required(),
+  surName: string().min(1).required(),
+  dateCreated: date().required(),
+  email: string()
+    .required()
+    .test('email', 'Email не правильний', (value) => {
+      return validationEmail.test(value)
+    }),
+  password: string().min(8).required(),
+  recPassword: string()
+    .min(8)
+    .required()
+    .test('password-match', 'Паролі не співпадають', function (value) {
+      return value === this.parent.password
+    }),
+  phone: string()
+    .required()
+    .default('')
+    .test({
+      test: (value) => (value ? isValidPhoneNumber(value) : true),
+      message: 'Номер телефону не корректний',
+    }),
+  course: object().required(),
+})
+
+const form = useForm({
+  validationSchema: schema,
+  initialValues: schema.getDefault(),
+})
+
+const { values, setFieldValue, resetForm } = form
+
+async function closeModal() {
+  const { valid } = await form.validate()
+  console.log(valid)
+}
+
+const isFormValid = computed(() => {
+  return Object.keys(errors.value).length === 0
+})
 </script>
 
 <template>
@@ -52,32 +85,32 @@ function changeTypeModal() {
       </div>
 
       <div class="registration-modal__inputs">
-        <FormInput v-model="name" placeholder="Ім'я" />
+        <FormInput name="name" placeholder="Ім'я" />
 
-        <FormInput v-model="surName" placeholder="Прізвище" />
+        <FormInput name="surName" placeholder="Прізвище" />
 
         <FormDatepicker
-          v-model="weekDay"
+          name="dateCreated"
           is-datepicker
           mode="date"
           placeholder="Дата народження"
         />
 
-        <FormInput v-model="email" placeholder="Е-mail" />
+        <FormInput name="email" placeholder="Е-mail" />
 
         <FormInput
-          v-model="phoneNumber"
+          name="phone"
           is-phone
           type="tel"
           placeholder="Номер телефону"
         />
 
-        <UniversitySelect v-model="typeStudent" />
+        <UniversitySelect name="course" />
 
         <div class="registration-modal__registration-password">
           <FormInput
-            v-model="password"
             :type="isPasswordType ? 'password' : 'text'"
+            name="password"
             placeholder="Пароль"
           />
           <BaseIcon
@@ -89,8 +122,8 @@ function changeTypeModal() {
 
         <div class="registration-modal__registration-password">
           <FormInput
-            v-model="recPassword"
             :type="isPasswordTypeRecover ? 'password' : 'text'"
+            name="recPassword"
             placeholder="Підтвердження паролю"
           />
 

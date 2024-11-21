@@ -46,4 +46,25 @@
   &__required {
     color: $pink-20
   }
+
+  &_error {
+    .form-input__error {
+      position: absolute;
+      top: calc(100% - 5px);
+      left: 0;
+      display: grid;
+      grid-auto-flow: column;
+      grid-gap: 7px;
+      justify-content: flex-start;
+      fill: #fff;
+      color: #fff;
+      font-size: 13px;
+      line-height: 16px;
+      background: #ea5455;
+      border-radius: 4px;
+      padding: 2px 4px;
+      z-index: 1;
+      width: 100%;
+    }
+  }
 }

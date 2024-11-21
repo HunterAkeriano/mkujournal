@@ -4,6 +4,25 @@
   fill: #f5f5f5;
   transition: fill ease 0.2s;
 
+  &__error {
+    position: absolute;
+    top: calc(100% - 5px);
+    left: 0;
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 7px;
+    justify-content: flex-start;
+    fill: #fff;
+    color: #fff;
+    font-size: 13px;
+    line-height: 16px;
+    background: #ea5455;
+    border-radius: 4px;
+    padding: 2px 4px;
+    z-index: 1;
+    width: 100%;
+  }
+
   &__close {
     width: 18px;
     height: 18px;

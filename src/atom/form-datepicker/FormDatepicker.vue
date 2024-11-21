@@ -2,10 +2,11 @@
 import { useScreens } from 'vue-screen-utils'
 import { DatePicker } from 'v-calendar'
 import { computed, ref } from 'vue'
+import { useCustomField } from '@/molecules/utils/custom-field.js'
 
 const props = defineProps({
   modelValue: {
-    type: Date,
+    type: [Date, String],
     default: '',
   },
   placeholder: {
@@ -39,6 +40,14 @@ const props = defineProps({
     type: String,
     default: 'datetime',
   },
+  customField: {
+    type: Function,
+    default: undefined,
+  },
+  name: {
+    type: String,
+    default: null,
+  },
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -47,30 +56,39 @@ const datePicker = ref(null)
 const popoverOpened = ref(false)
 const focusInput = ref(false)
 
+let value
+let errorMessage
+
+if (!props.customField) {
+  const { value: valueCustom, errorMessage: errorMessageCustom } =
+    useCustomField(props)
+
+  value = valueCustom
+  errorMessage = errorMessageCustom
+} else {
+  const { value: valueCustom, errorMessage: errorMessageCustom } =
+    props.customField(props)
+
+  value = valueCustom
+  errorMessage = errorMessageCustom
+}
+
 const inputValue = computed({
   get() {
+    if (props.name) {
+      return value.value
+    }
+
     return props.modelValue
   },
   set(next) {
+    if (props.name) {
+      value.value = next
+    }
+
     emit('update:modelValue', next)
   },
 })
-
-// const textContent = computed(() => {
-//   if (!inputValue.value) {
-//     return null
-//   }
-//
-//   const format = `${props.mode}-short`
-//
-//   if (inputValue.value instanceof Date) {
-//     return d(inputValue.value, format)
-//   }
-//
-//   const start = d(inputValue.value.start, format)
-//   const end = d(inputValue.value.end, format)
-//   return `${start} - ${end}`
-// })
 
 const { mapCurrent } = useScreens({
   xs: '576px',
@@ -85,10 +103,6 @@ const getColumns = computed(
     }
 )
 const columns = mapCurrent(getColumns.value)
-
-// const hasSelected = computed(() => {
-//   return inputValue.value !== null && inputValue.value !== undefined
-// })
 
 function onPopoverHide() {
   popoverOpened.value = false
@@ -156,6 +170,10 @@ const formattedDate = computed(() => {
         />
 
         <span class="form-datepicker__field-required">*</span>
+
+        <div class="form-datepicker__error" v-if="errorMessage">
+          {{ errorMessage }}
+        </div>
       </div>
     </template>
   </DatePicker>

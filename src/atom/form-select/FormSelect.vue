@@ -3,6 +3,8 @@ import Popper from 'vue3-popper'
 import { computed, ref, watch } from 'vue'
 import { debounce } from '@/molecules/utils/debounce.js'
 import { sortAndStringify } from '@/molecules/utils/sort-stringify.js'
+import { useCustomField } from '@/molecules/utils/custom-field.js'
+import { deepEqual } from '@/molecules/utils/deep-equal.js'
 
 const props = defineProps({
   modelValue: {
@@ -29,6 +31,14 @@ const props = defineProps({
     type: Function,
     default: undefined,
   },
+  name: {
+    type: String,
+    default: null,
+  },
+  customField: {
+    type: Function,
+    default: undefined,
+  },
   getOptionKey: {
     type: Function,
     default: (option) => {
@@ -52,11 +62,38 @@ const emit = defineEmits(['update:modelValue', 'search', 'change'])
 const isSearchVisible = computed(() => {
   return !hasSelected.value || showOptions.value
 })
+let value
+let initialError
+const errorMessage = ref(undefined)
+
+if (!props.customField) {
+  const { value: valueCustom, errorMessage: errorMessageCustom } =
+    useCustomField(props)
+
+  value = valueCustom
+  initialError = errorMessageCustom
+} else {
+  const { value: valueCustom, errorMessage: errorMessageCustom } =
+    props.customField(props)
+
+  value = valueCustom
+  initialError = errorMessageCustom
+}
+
 const inputValue = computed({
   get() {
+    if (props.name) {
+      return value.value
+    }
+
     return props.modelValue
   },
   set(next) {
+    if (deepEqual(value.value, next)) return
+    if (props.name) {
+      value.value = next
+    }
+
     emit('update:modelValue', next)
   },
 })

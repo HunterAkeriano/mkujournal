@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { AsYouType } from 'libphonenumber-js/max'
+import { useCustomField } from '@/molecules/utils/custom-field.js'
 
 const props = defineProps({
   modelValue: {
@@ -19,17 +20,50 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  name: {
+    type: String,
+    default: null,
+  },
+  customField: {
+    type: Function,
+    default: undefined,
+  },
 })
 
 const emit = defineEmits(['update:modelValue'])
 
 const focusInput = ref(false)
 
+let value
+let errorMessage
+
+if (!props.customField) {
+  const { value: valueCustom, errorMessage: errorMessageCustom } =
+    useCustomField(props)
+
+  value = valueCustom
+  errorMessage = errorMessageCustom
+} else {
+  const { value: valueCustom, errorMessage: errorMessageCustom } =
+    props.customField(props)
+
+  value = valueCustom
+  errorMessage = errorMessageCustom
+}
+
 const inputValue = computed({
   get() {
+    if (props.name) {
+      return value.value
+    }
+
     return props.modelValue
   },
   set(next) {
+    if (props.name) {
+      value.value = next
+    }
+
     emit('update:modelValue', next)
   },
 })
@@ -72,7 +106,7 @@ function onInput(event) {
 </script>
 
 <template>
-  <div class="form-input">
+  <div :class="{ 'form-input_error': errorMessage }" class="form-input">
     <span
       :class="{ 'form-input__placeholder_focus': focusInput }"
       class="form-input__placeholder"
@@ -91,6 +125,10 @@ function onInput(event) {
     />
 
     <span class="form-input__required">*</span>
+
+    <div class="form-input__error" v-if="errorMessage">
+      {{ errorMessage }}
+    </div>
   </div>
 </template>
 
