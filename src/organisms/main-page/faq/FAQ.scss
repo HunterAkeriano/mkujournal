@@ -1,0 +1,83 @@
+@import "@/assets/scss/variables/colors";
+@import "@/assets/scss/media-breakpoints";
+
+.faq {
+  padding: 50px 0;
+  position: relative;
+  height: 700px;
+
+  @include media-breakpoint-down(xs) {
+    height: 500px;
+  }
+
+  &__bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+
+    img {
+      width: 100%;
+      height: 100%;
+
+      @include media-breakpoint-down(md) {
+        object-fit: cover;
+      }
+    }
+  }
+
+  &__title {
+    text-align: center;
+    text-transform: uppercase;
+
+    h3 {
+      font-size: 48px;
+
+      @include media-breakpoint-down(md) {
+        font-size: 36px;
+      }
+
+      @include media-breakpoint-down(xs) {
+        font-size: 24px;
+      }
+    }
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 45px 0;
+
+    @include media-breakpoint-down(md) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    &-student {
+      margin-left: auto;
+      max-width: 484px;
+      max-height: 528px;
+
+      @include media-breakpoint-down(md) {
+        display: none;
+      }
+
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .accordion {
+    &__ol {
+      margin: 10px 0;
+      padding-left: 26px;
+
+      li {
+        margin-bottom: 15px;
+      }
+    }
+  }
+}

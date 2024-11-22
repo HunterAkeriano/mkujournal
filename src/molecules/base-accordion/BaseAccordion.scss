@@ -1,0 +1,47 @@
+@import "@/assets/scss/variables/colors";
+@import "@/assets/scss/media-breakpoints";
+
+.accordion {
+  margin-bottom: 25px;
+
+  &__title {
+    font-weight: 600;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 12px 20px;
+    border: 3px solid $pink-20;
+    border-radius: 20px;
+
+    @include media-breakpoint-down(xs) {
+      font-size: 18px;
+    }
+  }
+
+  &__body {
+    font-size: 22px;
+    font-weight: 500;
+    max-height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    transition: all .25s ease;
+    opacity: 0;
+    background: $pink-20;
+    margin: 0 20px;
+    padding: 0 14px;
+    color: $white;
+
+    @include media-breakpoint-down(xs) {
+      font-size: 14px;
+    }
+  }
+
+  &_opened {
+    .accordion__body {
+      opacity: 1;
+      max-height: 500px;
+      visibility: visible;
+      overflow: unset;
+      padding: 14px 20px;
+    }
+  }
+}
