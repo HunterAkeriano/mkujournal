@@ -5,7 +5,6 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   plugins: [vue()],
-  base: '/mkujournal/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
@@ -23,5 +22,8 @@ export default defineConfig({
         ],
       },
     },
+  },
+  build: {
+    outDir: 'www',
   },
 })
