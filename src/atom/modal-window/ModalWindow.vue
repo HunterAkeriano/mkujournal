@@ -75,7 +75,7 @@ function close(hard = false) {
   <Component
     :is="props.tag"
     :style="{
-      zIndex: props.modalIndex,
+      zIndex: props.modalIndex + 100,
     }"
     :class="{
       [`base-modal_size-${props.size}`]: true,
