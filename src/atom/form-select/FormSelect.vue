@@ -5,6 +5,7 @@ import { debounce } from '@/molecules/utils/debounce.js'
 import { sortAndStringify } from '@/molecules/utils/sort-stringify.js'
 import { useCustomField } from '@/molecules/utils/custom-field.js'
 import { deepEqual } from '@/molecules/utils/deep-equal.js'
+import BaseIcon from '@/molecules/base-icon/BaseIcon.vue'
 
 const props = defineProps({
   modelValue: {
@@ -206,7 +207,7 @@ function checkIsOptionSelected(option) {
 </script>
 
 <template>
-  <div class="form-select">
+  <div :class="{ 'form-select_opened': showOptions }" class="form-select">
     <Popper
       :show="showOptions"
       offset-distance="5"
@@ -229,6 +230,10 @@ function checkIsOptionSelected(option) {
             @blur="onBlur"
             @input="searchOptions($event.target.value)"
           />
+
+          <div class="form-select__arrow">
+            <BaseIcon icon="icon-arrow" />
+          </div>
 
           <div
             v-if="hasSelected && !showOptions"
