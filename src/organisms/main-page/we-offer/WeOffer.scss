@@ -1,0 +1,67 @@
+@import "@/assets/scss/variables/colors";
+@import "@/assets/scss/media-breakpoints";
+
+.we-offer {
+  margin-top: 60px;
+
+  &__title {
+    text-align: center;
+    margin-bottom: 40px;
+
+    h2 {
+      font-weight: 700;
+      font-size: 48px;
+      text-transform: uppercase;
+
+      @include media-breakpoint-down(md) {
+        font-size: 36px;
+      }
+
+      @include media-breakpoint-down(xs) {
+        font-size: 32px;
+      }
+    }
+  }
+
+  &__cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 80px 0;
+
+    @include media-breakpoint-down(md) {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include media-breakpoint-down(xs) {
+      display: none;
+    }
+
+    &-item {
+      padding: 20px;
+
+      h5 {
+        font-size: 28px;
+        text-align: center;
+        margin-bottom: 28px;
+
+        @include media-breakpoint-down(l) {
+          font-size: 22px;
+        }
+      }
+
+      p {
+        font-size: 18px;
+        font-weight: 500;
+        border: 3px dashed $pink-20;
+        border-radius: 20px;
+        padding: 10px;
+
+        @include media-breakpoint-down(l) {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}

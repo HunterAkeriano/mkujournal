@@ -9,4 +9,12 @@
     justify-content: center;
     text-transform: uppercase;
   }
+
+  &_white {
+    background: $white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 }
