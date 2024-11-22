@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 
 import 'swiper/scss'
 import 'swiper/scss/pagination'
+import BaseTooltip from '@/molecules/base-tooltip/BaseTooltip.vue'
 </script>
 
 <template>
@@ -31,7 +32,13 @@ import 'swiper/scss/pagination'
           </template>
 
           <template #content>
-            <p>{{ item.content }}</p>
+            <BaseTooltip placement="bottom">
+              <template #hover>
+                <p>{{ item.content }}</p>
+              </template>
+
+              <template #hint> {{ item.pooper }} </template>
+            </BaseTooltip>
           </template>
         </BaseCard>
       </div>
