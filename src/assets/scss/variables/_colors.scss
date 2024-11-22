@@ -41,3 +41,12 @@ $orange-55: #ffb14e;
 
   @return rgba($red, $green, $blue, $transparency);
 }
+
+@keyframes flash {
+  0% {
+    left: -35%;
+  }
+  100% {
+    left: 135%;
+  }
+}

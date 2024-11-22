@@ -33,7 +33,6 @@ function scrollToTop() {
 </script>
 
 <template>
-  test
   <TheHeader />
 
   <RouterView />

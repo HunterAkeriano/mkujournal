@@ -69,8 +69,8 @@ $fade-transition-duration: 0.2s * 3;
 
   &__close {
     position: absolute;
-    bottom: calc(100% + 13px);
-    right: 0;
+    bottom: calc(100% - 34px);
+    right: 20px;
     display: flex;
     padding: 10px;
     margin: -10px;
@@ -84,8 +84,8 @@ $fade-transition-duration: 0.2s * 3;
     }
 
     &-icon {
-      width: 15px;
-      height: 15px;
+      width: 20px;
+      height: 20px;
     }
   }
 

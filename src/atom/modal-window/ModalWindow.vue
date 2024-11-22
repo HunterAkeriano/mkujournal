@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import BaseIcon from '@/molecules/base-icon/BaseIcon.vue'
 
 const props = defineProps({
   tag: {
@@ -26,6 +27,10 @@ const props = defineProps({
     default: true,
   },
   isRegistration: {
+    type: Boolean,
+    default: false,
+  },
+  close: {
     type: Boolean,
     default: false,
   },
@@ -69,6 +74,10 @@ function close(hard = false) {
 
   emit('close')
 }
+
+function closeModal() {
+  emit('close')
+}
 </script>
 
 <template>
@@ -96,6 +105,14 @@ function close(hard = false) {
       >
         <div v-if="$slots.header" class="base-modal__header">
           <slot name="header" />
+
+          <div class="base-modal__close" @click="closeModal">
+            <BaseIcon
+              v-if="props.close"
+              icon="icon-close"
+              class="base-modal__close-icon"
+            />
+          </div>
         </div>
 
         <div

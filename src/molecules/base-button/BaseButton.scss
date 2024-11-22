@@ -1,12 +1,36 @@
 @import "@/assets/scss/variables/colors";
+@import "@/assets/scss/media-breakpoints";
 
 .base-button {
+  position: relative;
+  overflow: hidden;
   background: $black;
   border-radius: 40px;
   padding: 10px;
   color: $white;
   font-weight: 700;
   text-align: center;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: -25%;
+    left: -35%;
+    background: $white;
+    height: 150%;
+    width: 1px;
+    opacity: 0.5;
+    transform: rotate(30deg);
+    box-shadow: 0 0 15px 15px $white;
+  }
+
+  &:hover {
+    &:after {
+      @include media-breakpoint-up(md) {
+        animation: flash 300ms ease;
+      }
+    }
+  }
 
   &_clickable {
     cursor: pointer;

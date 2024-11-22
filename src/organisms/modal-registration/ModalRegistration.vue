@@ -69,6 +69,10 @@ async function closeModal() {
   }
 }
 
+function closesModal() {
+  emit('close')
+}
+
 const isFormValid = computed(() => {
   return Object.keys(errors.value).length === 0
 })
@@ -78,9 +82,10 @@ const isFormValid = computed(() => {
   <ModalWindow
     :modal-index="props.modalIndex"
     is-registration
+    close
     size="xl"
     class="registration-modal"
-    @close="closeModal"
+    @close="closesModal"
   >
     <template #header> РЕЄСТРАЦІЯ </template>
 
