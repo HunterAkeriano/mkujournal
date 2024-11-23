@@ -1,0 +1,34 @@
+import { handleRequest } from '@/atom/axios/use-api.js'
+
+export async function login(email, password) {
+  return handleRequest('/auth/login', { email, password }, 'POST')
+}
+
+export async function registration(
+  email,
+  password,
+  name,
+  surName,
+  dateCreated,
+  facultet,
+  phone
+) {
+  return handleRequest(
+    '/auth/register',
+    {
+      email: email,
+      password: password,
+      name: name,
+      surName: surName,
+      dateCreated: new Date(dateCreated),
+      facultet,
+      phone,
+      roleType: 'stud',
+    },
+    'POST'
+  )
+}
+
+export async function logout() {
+  return handleRequest('/auth/logout')
+}

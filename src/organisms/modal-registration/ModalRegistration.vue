@@ -12,6 +12,8 @@ import { useForm } from 'vee-validate'
 import { validationEmail } from '@/molecules/utils/validation.js'
 import { isValidPhoneNumber } from 'libphonenumber-js/max'
 import { useToast } from 'vue-toastification'
+import { login, registration } from '@/atom/axios/login.js'
+import { getErrorMessages } from '@/molecules/utils/fetch-error.js'
 
 const props = defineProps({
   modalIndex: {
@@ -60,12 +62,33 @@ const form = useForm({
   initialValues: schema.getDefault(),
 })
 
-const { values, setFieldValue, resetForm, errors } = form
+const { values, errors, setFieldError } = form
 
 async function closeModal() {
   const { valid } = await form.validate()
-  if (!valid) {
-    toast.error('Заповніть всі поля форми')
+
+  if (!valid) return
+
+  try {
+    const result = await registration(
+      values.email,
+      values.password,
+      values.name,
+      values.surName,
+      values.dateCreated,
+      values.course.id,
+      values.phone
+    )
+
+    if (result) {
+      toast.success(result.message)
+      toast.success('Очікуйте підтвердження вашого аккаунту')
+      emit('close')
+    }
+  } catch (error) {
+    const messages = getErrorMessages(error)
+    messages.forEach((item) => toast.error(item))
+    setFieldError(error.response?.data?.field, error.response?.data?.message)
   }
 }
 
