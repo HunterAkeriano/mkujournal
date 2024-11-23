@@ -12,7 +12,7 @@ import { useForm } from 'vee-validate'
 import { validationEmail } from '@/molecules/utils/validation.js'
 import { isValidPhoneNumber } from 'libphonenumber-js/max'
 import { useToast } from 'vue-toastification'
-import { login, registration } from '@/atom/axios/login.js'
+import { registration } from '@/atom/axios/login.js'
 import { getErrorMessages } from '@/molecules/utils/fetch-error.js'
 
 const props = defineProps({
@@ -146,6 +146,7 @@ const isFormValid = computed(() => {
             name="password"
             placeholder="Пароль"
           />
+
           <BaseIcon
             :icon="isPasswordType ? 'icon-eye-closed' : 'icon-eye'"
             class="form-input__icon"

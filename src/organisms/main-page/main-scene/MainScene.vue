@@ -15,11 +15,7 @@ import BaseIcon from '@/molecules/base-icon/BaseIcon.vue'
             <BaseCard bg-color="pink" class="base-user-card">
               <template #content>
                 <div class="card">
-                  <BaseButtonText
-                    tag="a"
-                    href="https://t.me/+j1KtnnpqtAM5OGEy"
-                    target="_blank"
-                  >
+                  <BaseButtonText>
                     приєднуйся до нашої спільноти зараз
                   </BaseButtonText>
                 </div>

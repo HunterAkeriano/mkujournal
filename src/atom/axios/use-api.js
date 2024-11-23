@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useToast } from 'vue-toastification'
+import { useCookiesStorage } from '@/molecules/utils/cookies.js'
 
 const toast = useToast()
 let isFetching = false
@@ -13,31 +14,55 @@ export const axiosInstance = axios.create({
   withCredentials: true,
 })
 
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = getToken()
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+const refreshToken = async () => {
+  const currentRefreshToken = getRefreshToken()
+
+  if (!currentRefreshToken) {
+    throw new Error('No refresh token available')
+  }
+
+  try {
+    const response = await axios.post(
+      'https://www.mku-journal.online/auth/refresh-token',
+      {
+        refreshToken: currentRefreshToken,
+      }
+    )
+
+    useCookiesStorage('access_token').setItem(response.data.accessToken)
+    useCookiesStorage('refresh_token').setItem(response.data.refreshToken)
+
+    return response.data.accessToken
+  } catch (error) {
+    throw new Error('Failed to refresh token')
+  }
+}
+
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config
+
+    if (
+      error.response.status === 401 &&
+      error.config &&
+      !error.config._isRetry
+    ) {
+      originalRequest._isRetry = true
+
+      try {
+        const result = await refreshToken()
+        if (result) {
+          return axiosInstance.request(originalRequest)
+        }
+      } catch (error) {
+        return Promise.reject(error)
+      }
     }
-    return config
-  },
-  (error) => {
+
     return Promise.reject(error)
   }
 )
-
-function canMakeRequest() {
-  const currentTime = Date.now()
-  const elapsedTime = currentTime - lastRequestTime
-
-  if (elapsedTime < 1000 && requestCount >= requestLimit) {
-    return false
-  }
-
-  lastRequestTime = currentTime
-  requestCount++
-  return true
-}
 
 async function performRequest(endpoint, body, method) {
   let response
@@ -57,50 +82,37 @@ async function performRequest(endpoint, body, method) {
   } else {
     throw new Error('Unsupported HTTP method')
   }
-  return response.data
-}
 
-export const handleRequestWithQueue = async (
-  endpoint,
-  body = null,
-  method = 'GET'
-) => {
-  if (canMakeRequest()) {
-    isFetching = true
-    const responseData = await performRequest(endpoint, body, method)
-    isFetching = false
-    return responseData
-  } else {
-    toast.error(t('tooManyRequest'))
-  }
+  return response.data
 }
 
 export const handleRequest = async (endpoint, body = null, method = 'GET') => {
   return await performRequest(endpoint, body, method)
 }
 
-const handleError = (error) => {
-  const errorMessage = error.response?.data?.detail || 'Помилка запиту'
-  toast.error(errorMessage)
-  isFetching = false
-  if (!retryTimeout) {
-    retryTimeout = setTimeout(() => {
-      retryTimeout = null
-    }, 5000)
-  }
-}
-
 function getToken() {
   const value = `; ${document.cookie}`
-  const parts = value.split(`; access=`)
-  if (parts.length === 2) return parts.pop().split(';').shift()
+  const parts = value.split(`; access_token=`)
+  if (parts.length === 2) {
+    return parts.pop().split(';')[0].trim()
+  }
+  return null
+}
+
+function getRefreshToken() {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; refresh_token=`)
+  if (parts.length === 2) {
+    return parts.pop().split(';')[0].trim()
+  }
+  return null
 }
 
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = getToken()
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+      config.headers.authorization = `${token}`
     }
     return config
   },

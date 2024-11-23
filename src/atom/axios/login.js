@@ -4,6 +4,14 @@ export async function login(email, password) {
   return handleRequest('/auth/login', { email, password }, 'POST')
 }
 
+export async function signoutUser() {
+  return handleRequest('/auth/signout', {}, 'POST')
+}
+
+export async function myProfile() {
+  return handleRequest('/profile', {}, 'GET')
+}
+
 export async function registration(
   email,
   password,

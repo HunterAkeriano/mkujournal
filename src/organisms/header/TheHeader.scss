@@ -16,17 +16,23 @@
   }
 
   &__link {
-   @include media-breakpoint-down(xs) {
+   @include media-breakpoint-down(md) {
      display: none;
    }
   }
 
+  &_user {
+    .header__link {
+      display: none;
+    }
+  }
+
   &__logo {
-    transform: translateY(20px);
     background: $pink-10;
     border-radius: 50%;
 
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(md) {
+      position: unset;
       transform: unset;
     }
   }
@@ -36,7 +42,7 @@
     align-items: center;
     gap: 20px;
 
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(md) {
       display: none;
     }
   }
@@ -45,7 +51,7 @@
     display: none;
     min-width: 40px;
 
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(md) {
       display: block;
     }
 
@@ -93,7 +99,7 @@
       display: block;
     }
 
-    @include media-breakpoint-up(xs) {
+    @include media-breakpoint-up(md) {
       display: none;
     }
   }
@@ -115,5 +121,32 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: -1;
+  }
+
+  .user {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    &__content {
+      display: block;
+      cursor: pointer;
+      width: 100%;
+      padding: 10px;
+      border-radius: 0 0 10px 10px;
+
+      &:hover {
+        background: $pink-10;
+      }
+    }
+
+
+    img {
+      width: 45px;
+      height: 45px;
+      object-fit: cover;
+      border-radius: 20px;
+    }
   }
 }
