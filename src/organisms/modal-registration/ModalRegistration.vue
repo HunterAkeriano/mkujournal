@@ -134,7 +134,7 @@ const isFormValid = computed(() => {
         <FormInput
           name="phone"
           is-phone
-          type="tel"
+          type="text"
           placeholder="Номер телефону"
         />
 

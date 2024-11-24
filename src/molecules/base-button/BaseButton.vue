@@ -2,7 +2,7 @@
 const props = defineProps({
   tag: {
     type: String,
-    default: 'a',
+    default: 'button',
   },
   href: {
     type: String,

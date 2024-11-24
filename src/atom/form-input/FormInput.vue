@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { AsYouType } from 'libphonenumber-js/max'
 import { useCustomField } from '@/molecules/utils/custom-field.js'
 
@@ -103,6 +103,16 @@ function onInput(event) {
 
   inputValue.value = input.value
 }
+
+onMounted(() => {
+  if (
+    props.isPhone &&
+    inputValue.value &&
+    typeof inputValue.value === 'string'
+  ) {
+    inputValue.value = new AsYouType().input(inputValue.value)
+  }
+})
 </script>
 
 <template>

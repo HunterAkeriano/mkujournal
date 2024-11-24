@@ -41,6 +41,10 @@ async function logout(toggleDropdown) {
   await router.replace('/')
   toggleDropdown()
 }
+
+function resendPasswordModal() {
+  loginModal.close()
+}
 </script>
 
 <template>
@@ -174,6 +178,7 @@ async function logout(toggleDropdown) {
         :modal-index="modalIndex"
         @close="loginModal.close"
         @change-type-modal="changeLoginType"
+        @resend-password-modal="resendPasswordModal"
       />
     </template>
   </ModalContainer>

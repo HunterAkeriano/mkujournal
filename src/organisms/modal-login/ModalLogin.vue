@@ -20,7 +20,7 @@ const props = defineProps({
 const toast = useToast()
 const authStore = useAuthStore()
 
-const emit = defineEmits(['close', 'changeTypeModal'])
+const emit = defineEmits(['close', 'changeTypeModal', 'resendPasswordModal'])
 
 const schema = object({
   email: string()
@@ -37,7 +37,7 @@ const form = useForm({
   initialValues: schema.getDefault(),
 })
 
-const { values, errors, setFieldError } = form
+const { values, setFieldError } = form
 
 function closesModal() {
   emit('close')
@@ -69,6 +69,10 @@ async function closeModal() {
 
 function changeTypeModal() {
   emit('changeTypeModal')
+}
+
+function openResendPassword() {
+  emit('resendPasswordModal')
 }
 </script>
 
@@ -111,6 +115,15 @@ function changeTypeModal() {
           <BaseButton clickable class="login-modal__btn" @click="closeModal">
             Увійти
           </BaseButton>
+
+          <BaseButtonText
+            tag="p"
+            clickable
+            class="btn__up"
+            @click="openResendPassword"
+          >
+            <span class="btn__resend">Забули пароль?</span>
+          </BaseButtonText>
         </div>
       </div>
     </template>
