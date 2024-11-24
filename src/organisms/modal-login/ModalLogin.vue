@@ -2,7 +2,7 @@
 import ModalWindow from '@/atom/modal-window/ModalWindow.vue'
 import FormInput from '@/atom/form-input/FormInput.vue'
 import BaseButton from '@/molecules/base-button/BaseButton.vue'
-import { object, string } from 'yup'
+import { boolean, object, string } from 'yup'
 import { validationEmail } from '@/molecules/utils/validation.js'
 import { useForm } from 'vee-validate'
 import { getErrorMessages } from '@/molecules/utils/fetch-error.js'
@@ -10,6 +10,7 @@ import { useToast } from 'vue-toastification'
 import { login } from '@/atom/axios/login.js'
 import { useAuthStore } from '@/plugin/stores/auth-storage.js'
 import BaseButtonText from '@/molecules/base-button-text/BaseButtonText.vue'
+import CheckBox from '@/molecules/checkbox/CheckBox.vue'
 
 const props = defineProps({
   modalIndex: {
@@ -28,6 +29,7 @@ const schema = object({
       return validationEmail.test(value)
     }),
   password: string().min(8).required(),
+  rememberMe: boolean().required().default(false),
 })
 
 const form = useForm({
@@ -49,7 +51,11 @@ async function closeModal() {
   try {
     const result = await login(values.email, values.password)
     if (result) {
-      authStore.setTokens(result.accessToken, result.refreshToken)
+      authStore.setTokens(
+        result.accessToken,
+        result.refreshToken,
+        values.rememberMe
+      )
       await authStore.fetchData()
       toast.success('Ви успішно авторизувались')
       emit('close')
@@ -59,6 +65,10 @@ async function closeModal() {
     messages.forEach((item) => toast.error(item))
     setFieldError(error.response?.data?.field, error.response?.data?.message)
   }
+}
+
+function changeTypeModal() {
+  emit('changeTypeModal')
 }
 </script>
 
@@ -75,20 +85,33 @@ async function closeModal() {
 
     <template #content>
       <div class="login-modal__inputs">
+        <div class="login-modal__bg">
+          <img src="@/assets/img/modal/modal-login.png" alt="login" />
+        </div>
+
+        <div class="login-modal__logo">
+          <img src="@/assets/img/logo.svg" alt="logo" />
+        </div>
+
         <FormInput name="email" placeholder="Email користувача" />
 
         <FormInput name="password" placeholder="Пароль" type="password" />
 
-        <BaseButtonText>
-          <p class="login-modal__info">
-            Немає аккаунту?
-            <span class="login-modal__register">Зареєструватись</span>
-          </p>
-        </BaseButtonText>
+        <div class="login-modal__remember">
+          <CheckBox name="rememberMe"> Запам'ятати мене </CheckBox>
 
-        <BaseButton clickable class="login-modal__btn" @click="closeModal">
-          Увійти
-        </BaseButton>
+          <BaseButtonText @click="changeTypeModal">
+            <p class="login-modal__info">
+              <span class="login-modal__register">Зареєструватись</span>
+            </p>
+          </BaseButtonText>
+        </div>
+
+        <div class="btn">
+          <BaseButton clickable class="login-modal__btn" @click="closeModal">
+            Увійти
+          </BaseButton>
+        </div>
       </div>
     </template>
   </ModalWindow>

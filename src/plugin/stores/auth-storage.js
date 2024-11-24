@@ -6,6 +6,7 @@ import { myProfile, signoutUser } from '@/atom/axios/login.js'
 export const useAuthStore = defineStore('auth', () => {
   const accessStorage = useCookiesStorage('access_token')
   const refreshStorage = useCookiesStorage('refresh_token')
+  const rememberMeStorage = useCookiesStorage('remember_me')
   const user = ref(null)
   const isSignoutLoading = ref(false)
   const signedIn = computed(() => !!user.value)
@@ -16,11 +17,16 @@ export const useAuthStore = defineStore('auth', () => {
   const { value: refreshToken, setValue: setRefreshToken } =
     getAuthInfo(refreshStorage)
 
-  function setTokens(at, rt) {
-    const type = 'regular'
+  const { value: rememberMe, setValue: setRememberMe } =
+    getRememberMeInfo(rememberMeStorage)
+
+  function setTokens(at, rt, rm) {
+    const remember = rm !== undefined ? rm : rememberMe.value
+    const type = remember ? 'regular' : 'session'
 
     setAccessToken(at, type)
     setRefreshToken(rt, type)
+    setRememberMe(remember, type)
   }
 
   function reset() {
@@ -77,5 +83,20 @@ function getAuthInfo(storage) {
   return {
     value: tokenValueGetter,
     setValue: setTokenValue,
+  }
+}
+
+function getRememberMeInfo(storage) {
+  const _rememberMeValue = ref(storage.getItem() || null)
+  const rememberMeValueGetter = computed(() => _rememberMeValue.value)
+
+  const setRememberMeValue = (value, type) => {
+    storage.setItem(value ? 'true' : null, type)
+    _rememberMeValue.value = value || false
+  }
+
+  return {
+    value: rememberMeValueGetter,
+    setValue: setRememberMeValue,
   }
 }

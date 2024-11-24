@@ -17,9 +17,13 @@ const isOpenMenu = ref(false)
 const authStore = useAuthStore()
 
 function changeTypeModal() {
-  //todo: add modal login
-
   registrationModal.close()
+  loginModal.open()
+}
+
+function changeLoginType() {
+  loginModal.close()
+  registrationModal.open()
 }
 
 function openModalLogin() {
@@ -169,7 +173,7 @@ async function logout(toggleDropdown) {
         v-if="loginModal.item"
         :modal-index="modalIndex"
         @close="loginModal.close"
-        @change-type-modal="changeTypeModal"
+        @change-type-modal="changeLoginType"
       />
     </template>
   </ModalContainer>
