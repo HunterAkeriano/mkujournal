@@ -8,9 +8,12 @@ import ModalLogin from '@/organisms/modal-login/ModalLogin.vue'
 import { useAuthStore } from '@/plugin/stores/auth-storage.js'
 import BaseDropDown from '@/molecules/base-dropdown/BaseDropDown.vue'
 import { useRouter } from 'vue-router'
+import ModalRecovery from '@/organisms/modal-recovery/ModalRecovery.vue'
 
 const registrationModal = useToggleModal()
 const loginModal = useToggleModal()
+const recoveryModal = useToggleModal()
+
 const router = useRouter()
 
 const isOpenMenu = ref(false)
@@ -44,6 +47,7 @@ async function logout(toggleDropdown) {
 
 function resendPasswordModal() {
   loginModal.close()
+  recoveryModal.open()
 }
 </script>
 
@@ -179,6 +183,17 @@ function resendPasswordModal() {
         @close="loginModal.close"
         @change-type-modal="changeLoginType"
         @resend-password-modal="resendPasswordModal"
+      />
+    </template>
+  </ModalContainer>
+
+  <ModalContainer>
+    <template #default="{ modalIndex }">
+      <ModalRecovery
+        v-if="recoveryModal.item"
+        :modal-index="modalIndex"
+        @close="recoveryModal.close"
+        @change-type-modal="changeTypeModal"
       />
     </template>
   </ModalContainer>
