@@ -3,11 +3,6 @@ import { useToast } from 'vue-toastification'
 import { useCookiesStorage } from '@/molecules/utils/cookies.js'
 
 const toast = useToast()
-let isFetching = false
-let retryTimeout = null
-const requestLimit = 1
-let requestCount = 0
-let lastRequestTime = 0
 
 export const axiosInstance = axios.create({
   baseURL: 'https://www.mku-journal.online/',

@@ -5,6 +5,9 @@ import { boolean, object, string } from 'yup'
 import { validationEmail } from '@/molecules/utils/validation.js'
 import { useForm } from 'vee-validate'
 import BaseButton from '@/molecules/base-button/BaseButton.vue'
+import { resetPassword } from '@/atom/axios/login.js'
+import { useToast } from 'vue-toastification'
+import { getErrorMessages } from '@/molecules/utils/fetch-error.js'
 
 const props = defineProps({
   modalIndex: {
@@ -14,6 +17,7 @@ const props = defineProps({
 
 const emit = defineEmits(['close'])
 
+const toast = useToast()
 function closesModal() {
   emit('close')
 }
@@ -32,6 +36,25 @@ const form = useForm({
 })
 
 const { values, setFieldError } = form
+
+async function recoveryPassword() {
+  const { valid } = await form.validate()
+
+  if (!valid) return
+
+  try {
+    const result = await resetPassword(values.email)
+
+    if (result) {
+      toast.success(result.message)
+      emit('close')
+    }
+  } catch (error) {
+    const messages = getErrorMessages(error)
+    messages.forEach((item) => toast.error(item))
+    setFieldError(error.response?.data?.field, error.response?.data?.message)
+  }
+}
 </script>
 
 <template>
@@ -53,7 +76,9 @@ const { values, setFieldError } = form
 
         <FormInput name="email" placeholder="Введіть email" />
 
-        <BaseButton clickable> Відновити пароль </BaseButton>
+        <BaseButton clickable @click="recoveryPassword">
+          Відновити пароль
+        </BaseButton>
       </div>
     </template>
   </ModalWindow>

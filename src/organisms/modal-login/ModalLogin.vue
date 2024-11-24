@@ -61,6 +61,7 @@ async function closeModal() {
       emit('close')
     }
   } catch (error) {
+    console.log(error)
     const messages = getErrorMessages(error)
     messages.forEach((item) => toast.error(item))
     setFieldError(error.response?.data?.field, error.response?.data?.message)

@@ -8,6 +8,10 @@ export async function signoutUser() {
   return handleRequest('/auth/signout', {}, 'POST')
 }
 
+export async function resetPassword(email) {
+  return handleRequest('/auth/reset-password', { email }, 'POST')
+}
+
 export async function myProfile() {
   return handleRequest('/profile', {}, 'GET')
 }
