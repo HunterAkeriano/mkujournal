@@ -143,4 +143,33 @@
     padding: 5px;
     cursor: default;
   }
+
+  &__options-loader {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &-icon {
+      stroke: $black;
+      width: 24px;
+      height: 24px;
+      animation: rotate-animation 2s infinite linear;
+
+      @keyframes rotate-animation {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        50% {
+          transform: rotate(180deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    }
+  }
 }

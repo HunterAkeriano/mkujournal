@@ -8,6 +8,7 @@ import BaseButton from '@/molecules/base-button/BaseButton.vue'
 import { resetPassword } from '@/atom/axios/login.js'
 import { useToast } from 'vue-toastification'
 import { getErrorMessages } from '@/molecules/utils/fetch-error.js'
+import { ref } from 'vue'
 
 const props = defineProps({
   modalIndex: {
@@ -17,6 +18,7 @@ const props = defineProps({
 
 const emit = defineEmits(['close'])
 
+const isLoading = ref(false)
 const toast = useToast()
 function closesModal() {
   emit('close')
@@ -42,6 +44,8 @@ async function recoveryPassword() {
 
   if (!valid) return
 
+  isLoading.value = true
+
   try {
     const result = await resetPassword(values.email)
 
@@ -53,6 +57,8 @@ async function recoveryPassword() {
     const messages = getErrorMessages(error)
     messages.forEach((item) => toast.error(item))
     setFieldError(error.response?.data?.field, error.response?.data?.message)
+  } finally {
+    isLoading.value = false
   }
 }
 </script>
@@ -76,7 +82,7 @@ async function recoveryPassword() {
 
         <FormInput name="email" placeholder="Введіть email" />
 
-        <BaseButton clickable @click="recoveryPassword">
+        <BaseButton :loading="isLoading" clickable @click="recoveryPassword">
           Відновити пароль
         </BaseButton>
       </div>

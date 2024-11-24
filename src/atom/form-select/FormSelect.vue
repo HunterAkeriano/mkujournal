@@ -32,6 +32,10 @@ const props = defineProps({
     type: Function,
     default: undefined,
   },
+  loader: {
+    type: Boolean,
+    default: undefined,
+  },
   name: {
     type: String,
     default: null,
@@ -265,8 +269,22 @@ function checkIsOptionSelected(option) {
             {{ getOptionLabelByProps(option) }}
           </div>
 
-          <div v-if="!props.options.length" class="form-select__not-item">
+          <div
+            v-if="!props.loader && !options.length"
+            class="form-select__not-item"
+          >
             Елементів не знайдено
+          </div>
+
+          <div
+            v-if="props.loader"
+            ref="optionsLoaderRef"
+            class="form-select__options-loader"
+          >
+            <BaseIcon
+              icon="icon-loader-2"
+              class="form-select__options-loader-icon"
+            />
           </div>
         </div>
       </template>

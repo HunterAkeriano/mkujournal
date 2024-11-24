@@ -33,6 +33,37 @@
     }
   }
 
+  &:disabled {
+    background: $black-20;
+    cursor: default;
+
+    &:hover {
+      &:after {
+        animation: unset;
+      }
+    }
+  }
+
+  &__loading-icon {
+    stroke: $white;
+    width: 21px;
+    height: 21px;
+    position: absolute;
+    animation: spin 0.6s linear infinite;
+    left: 50%;
+    margin-left: -11px;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
   &_clickable {
     cursor: pointer;
   }

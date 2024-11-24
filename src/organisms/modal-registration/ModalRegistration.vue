@@ -23,6 +23,7 @@ const props = defineProps({
 
 const emit = defineEmits(['close', 'changeTypeModal'])
 
+const isLoading = ref(false)
 const toast = useToast()
 const isPasswordType = ref(true)
 const isPasswordTypeRecover = ref(true)
@@ -69,6 +70,8 @@ async function closeModal() {
 
   if (!valid) return
 
+  isLoading.value = true
+
   try {
     const result = await registration(
       values.email,
@@ -89,16 +92,14 @@ async function closeModal() {
     const messages = getErrorMessages(error)
     messages.forEach((item) => toast.error(item))
     setFieldError(error.response?.data?.field, error.response?.data?.message)
+  } finally {
+    isLoading.value = false
   }
 }
 
 function closesModal() {
   emit('close')
 }
-
-const isFormValid = computed(() => {
-  return Object.keys(errors.value).length === 0
-})
 </script>
 
 <template>
@@ -169,6 +170,7 @@ const isFormValid = computed(() => {
         </div>
 
         <BaseButton
+          :loading="isLoading"
           clickable
           class="registration-modal__btn"
           @click="closeModal"
@@ -177,6 +179,7 @@ const isFormValid = computed(() => {
         </BaseButton>
 
         <BaseButtonText
+          :disabled="!isLoading"
           clickable
           class="registration-modal__login"
           @click="changeTypeModal"

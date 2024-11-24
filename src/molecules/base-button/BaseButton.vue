@@ -1,4 +1,6 @@
 <script setup>
+import BaseIcon from '@/molecules/base-icon/BaseIcon.vue'
+
 const props = defineProps({
   tag: {
     type: String,
@@ -48,6 +50,12 @@ function onClick(event) {
     class="base-button"
     @click="onClick"
   >
+    <BaseIcon
+      v-if="props.loading"
+      icon="icon-loader-2"
+      class="base-button__loading-icon"
+    />
+
     <slot name="default" />
   </Component>
 </template>

@@ -1,7 +1,7 @@
 <script setup>
 import FormSelect from '@/atom/form-select/FormSelect.vue'
-import { universityArray } from '@/mixins/university.js'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { getSelectUniversity } from '@/molecules/univercity-select/university-select.js'
 
 const props = defineProps({
   name: {
@@ -10,27 +10,22 @@ const props = defineProps({
   },
 })
 
-const filteredUniversities = ref(universityArray)
+const selectData = getSelectUniversity()
 
-function search(query) {
-  if (!query) {
-    filteredUniversities.value = universityArray
-    return
-  }
-  filteredUniversities.value = universityArray.filter((university) =>
-    university.name.toLowerCase().includes(query.toLowerCase())
-  )
-}
+onMounted(async () => {
+  await selectData.fetchItems()
+})
 </script>
 
 <template>
   <FormSelect
-    :options="filteredUniversities"
+    :options="selectData.items"
     :get-option-label="(item) => item.name"
     :name="props.name"
+    :loader="selectData.isLoading"
     searchable
     placeholder="Факультет"
-    @search="search($event)"
+    @search="selectData.searchItems($event)"
   />
 </template>
 

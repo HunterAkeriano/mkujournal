@@ -11,6 +11,7 @@ import { login } from '@/atom/axios/login.js'
 import { useAuthStore } from '@/plugin/stores/auth-storage.js'
 import BaseButtonText from '@/molecules/base-button-text/BaseButtonText.vue'
 import CheckBox from '@/molecules/checkbox/CheckBox.vue'
+import { ref } from 'vue'
 
 const props = defineProps({
   modalIndex: {
@@ -22,6 +23,7 @@ const authStore = useAuthStore()
 
 const emit = defineEmits(['close', 'changeTypeModal', 'resendPasswordModal'])
 
+const isLoading = ref(false)
 const schema = object({
   email: string()
     .required()
@@ -48,6 +50,8 @@ async function closeModal() {
 
   if (!valid) return
 
+  isLoading.value = true
+
   try {
     const result = await login(values.email, values.password)
     if (result) {
@@ -61,10 +65,11 @@ async function closeModal() {
       emit('close')
     }
   } catch (error) {
-    console.log(error)
     const messages = getErrorMessages(error)
     messages.forEach((item) => toast.error(item))
     setFieldError(error.response?.data?.field, error.response?.data?.message)
+  } finally {
+    isLoading.value = false
   }
 }
 
@@ -113,7 +118,12 @@ function openResendPassword() {
         </div>
 
         <div class="btn">
-          <BaseButton clickable class="login-modal__btn" @click="closeModal">
+          <BaseButton
+            :loading="isLoading"
+            clickable
+            class="login-modal__btn"
+            @click="closeModal"
+          >
             Увійти
           </BaseButton>
 
