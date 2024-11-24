@@ -1,0 +1,1 @@
+import{_ as t,c as s,a as n,o}from"./index-wRobxlMv.js";const r={};function a(c,e){return o(),s("main",null,e[0]||(e[0]=[n("div",null,"test test test",-1)]))}const _=t(r,[["render",a]]);export{_ as default};
