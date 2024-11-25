@@ -63,7 +63,7 @@ const form = useForm({
   initialValues: schema.getDefault(),
 })
 
-const { values, errors, setFieldError } = form
+const { values, setFieldError } = form
 
 async function closeModal() {
   const { valid } = await form.validate()

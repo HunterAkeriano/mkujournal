@@ -7,3 +7,11 @@ export async function facultetSelect(search) {
     'GET'
   )
 }
+
+export async function getBlock() {
+  return handleRequest('/facultet/main-block', {}, 'GET')
+}
+
+export async function updateTeacher(array) {
+  return handleRequest('/facultet/update-survey', { numberId: array }, 'POST')
+}
