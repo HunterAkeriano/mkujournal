@@ -73,7 +73,7 @@ async function submit() {
     if (result) {
       items.value.forEach((item, idx) => {
         item.teachers.forEach((el, index) => {
-          if (values.items[idx].teachers[index].voice) {
+          if (values.items[idx].teachers[index].hasSelected) {
             el.voice += 1
           }
         })
