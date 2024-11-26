@@ -1,9 +1,9 @@
 <script setup>
-import { nextTick, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { getBlock, updateTeacher } from '@/atom/axios/facultet.js'
 import BaseCard from '@/atom/base-card/BaseCard.vue'
 import CheckBox from '@/molecules/checkbox/CheckBox.vue'
-import { array, boolean, date, number, object, string } from 'yup'
+import { array, boolean, number, object, string } from 'yup'
 import { useForm } from 'vee-validate'
 import BaseButton from '@/molecules/base-button/BaseButton.vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
