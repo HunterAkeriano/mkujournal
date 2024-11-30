@@ -21,6 +21,7 @@ import {
   storageRef,
   uploadBytes,
 } from '@/plugin/firebase/firebase.js'
+import FormSelect from '@/atom/form-select/FormSelect.vue'
 
 const props = defineProps({
   modalIndex: {
@@ -66,6 +67,7 @@ const schema = object({
       message: 'Номер телефону не корректний',
     }),
   course: object().required(),
+  gender: object().required(),
 })
 
 const form = useForm({
@@ -104,7 +106,8 @@ async function closeModal() {
       values.dateCreated,
       values.course.id,
       values.phone,
-      avatarUrl
+      avatarUrl,
+      values.gender.code
     )
 
     if (result) {
@@ -124,6 +127,19 @@ async function closeModal() {
 function closesModal() {
   emit('close')
 }
+
+const genderDate = [
+  {
+    id: 0,
+    name: 'Чоловіча',
+    code: 'man',
+  },
+  {
+    id: 1,
+    name: 'Жіноча',
+    code: 'female',
+  },
+]
 </script>
 
 <template>
@@ -171,6 +187,13 @@ function closesModal() {
         />
 
         <UniversitySelect name="course" />
+
+        <FormSelect
+          :options="genderDate"
+          :get-option-label="(item) => item.name"
+          name="gender"
+          placeholder="Стать"
+        />
 
         <div class="registration-modal__registration-password">
           <FormInput

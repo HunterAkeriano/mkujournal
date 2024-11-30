@@ -20,7 +20,7 @@ onMounted(async () => {
 <template>
   <FormSelect
     :options="selectData.items"
-    :get-option-label="(item) => item.name"
+    :get-option-label="(item) => item.full_name"
     :name="props.name"
     :loader="selectData.isLoading"
     searchable

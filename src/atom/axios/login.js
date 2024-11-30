@@ -24,7 +24,8 @@ export async function registration(
   dateCreated,
   facultet,
   phone,
-  photoUrl
+  photoUrl,
+  gender
 ) {
   return handleRequest(
     '/auth/register',
@@ -38,6 +39,7 @@ export async function registration(
       phone,
       roleType: 'student',
       photoUrl,
+      gender,
     },
     'POST'
   )
