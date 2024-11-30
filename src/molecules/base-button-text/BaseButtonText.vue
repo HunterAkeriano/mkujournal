@@ -6,11 +6,11 @@ const props = defineProps({
   },
   href: {
     type: String,
-    required: false,
+    required: null,
   },
   to: {
     type: String,
-    required: false,
+    required: null,
   },
   type: {
     type: String,

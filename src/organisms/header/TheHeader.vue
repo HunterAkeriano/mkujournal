@@ -9,6 +9,7 @@ import { useAuthStore } from '@/plugin/stores/auth-storage.js'
 import BaseDropDown from '@/molecules/base-dropdown/BaseDropDown.vue'
 import { useRouter } from 'vue-router'
 import ModalRecovery from '@/organisms/modal-recovery/ModalRecovery.vue'
+import BaseButtonText from '@/molecules/base-button-text/BaseButtonText.vue'
 
 const registrationModal = useToggleModal()
 const loginModal = useToggleModal()
@@ -85,18 +86,26 @@ function resendPasswordModal() {
             <template #default="{ toggleDropdown }">
               <div class="user" @click="toggleDropdown">
                 <img
-                  v-if="authStore.user.userPhoto"
-                  :src="authStore.user.userPhoto"
+                  v-if="authStore.user.user_photo"
+                  :src="authStore.user.user_photo"
                 />
 
-                {{ authStore.user.surName + ' ' + authStore.user.name }}
+                {{ authStore.user.sur_name + ' ' + authStore.user.name }}
               </div>
             </template>
 
             <template #content="{ toggleDropdown }">
-              <span class="user__content" @click="logout(toggleDropdown)"
-                >Вийти</span
+              <BaseButtonText
+                class="user__content"
+                to="/profile"
+                tag="RouterLink"
               >
+                Профіль
+              </BaseButtonText>
+
+              <span class="user__content" @click="logout(toggleDropdown)">
+                Вийти
+              </span>
             </template>
           </BaseDropDown>
 
@@ -144,16 +153,24 @@ function resendPasswordModal() {
           <template #default="{ toggleDropdown }">
             <div class="user" @click="toggleDropdown">
               <img
-                v-if="authStore.user.userPhoto"
-                :src="authStore.user.userPhoto"
+                v-if="authStore.user.user_photo"
+                :src="authStore.user.user_photo"
                 alt="user"
               />
 
-              {{ authStore.user.surName + ' ' + authStore.user.name }}
+              {{ authStore.user.sur_name + ' ' + authStore.user.name }}
             </div>
           </template>
 
           <template #content="{ toggleDropdown }">
+            <BaseButtonText
+              class="user__content"
+              to="/profile"
+              tag="RouterLink"
+            >
+              Профіль
+            </BaseButtonText>
+
             <span class="user__content" @click="toggleDropdown">Вийти</span>
           </template>
         </BaseDropDown>
