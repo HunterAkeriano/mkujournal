@@ -23,7 +23,8 @@ export async function registration(
   surName,
   dateCreated,
   facultet,
-  phone
+  phone,
+  photoUrl
 ) {
   return handleRequest(
     '/auth/register',
@@ -35,7 +36,8 @@ export async function registration(
       dateCreated: new Date(dateCreated),
       facultet,
       phone,
-      roleType: 'stud',
+      roleType: 'student',
+      photoUrl,
     },
     'POST'
   )

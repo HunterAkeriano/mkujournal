@@ -1,7 +1,7 @@
 <script setup>
 import ModalWindow from '@/atom/modal-window/ModalWindow.vue'
 import FormInput from '@/atom/form-input/FormInput.vue'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import BaseButton from '@/molecules/base-button/BaseButton.vue'
 import BaseButtonText from '@/molecules/base-button-text/BaseButtonText.vue'
 import FormDatepicker from '@/atom/form-datepicker/FormDatepicker.vue'
@@ -14,6 +14,13 @@ import { isValidPhoneNumber } from 'libphonenumber-js/max'
 import { useToast } from 'vue-toastification'
 import { registration } from '@/atom/axios/login.js'
 import { getErrorMessages } from '@/molecules/utils/fetch-error.js'
+import AvatarUpload from '@/atom/avatar-upload/AvatarUpload.vue'
+import {
+  getDownloadURL,
+  storage,
+  storageRef,
+  uploadBytes,
+} from '@/plugin/firebase/firebase.js'
 
 const props = defineProps({
   modalIndex: {
@@ -27,6 +34,9 @@ const isLoading = ref(false)
 const toast = useToast()
 const isPasswordType = ref(true)
 const isPasswordTypeRecover = ref(true)
+
+const preloadedAvatar = ref(null)
+const localAvatar = ref(null)
 
 function changeTypeModal() {
   emit('changeTypeModal')
@@ -69,10 +79,23 @@ async function closeModal() {
   const { valid } = await form.validate()
 
   if (!valid) return
-
   isLoading.value = true
+  let avatarUrl
 
   try {
+    const date = Date.now()
+    if (localAvatar.value !== null) {
+      const pfpRef = storageRef(storage, 'profile-pictures/' + `pfp-${date}`)
+
+      await uploadBytes(pfpRef, localAvatar.value).then(async () => {
+        await getDownloadURL(
+          storageRef(storage, 'profile-pictures/' + `pfp-${date}`)
+        ).then((url) => {
+          avatarUrl = url
+        })
+      })
+    }
+
     const result = await registration(
       values.email,
       values.password,
@@ -80,7 +103,8 @@ async function closeModal() {
       values.surName,
       values.dateCreated,
       values.course.id,
-      values.phone
+      values.phone,
+      avatarUrl
     )
 
     if (result) {
@@ -119,6 +143,13 @@ function closesModal() {
       </div>
 
       <div class="registration-modal__inputs">
+        <div class="registration-modal__ava">
+          <AvatarUpload
+            v-model:preloaded-file="preloadedAvatar"
+            v-model:local-file="localAvatar"
+          />
+        </div>
+
         <FormInput name="name" placeholder="Ім'я" />
 
         <FormInput name="surName" placeholder="Прізвище" />

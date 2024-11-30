@@ -4,6 +4,10 @@
 .registration-modal {
   width: 100%;
 
+  &__ava {
+    width: fit-content;
+  }
+
   &__teacher {
     position: absolute;
     left: 0;
@@ -54,8 +58,8 @@
   }
 
   &__inputs {
-    padding: 20px 0;
-    max-width: 370px;
+    padding-bottom: 20px;
+    max-width: 450px;
     margin: 0 auto;
   }
 
