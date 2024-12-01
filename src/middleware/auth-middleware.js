@@ -1,6 +1,6 @@
 import { ref } from 'vue'
-import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/plugin/stores/auth-storage.js'
+import { storeToRefs } from 'pinia'
 
 export function useAuthMiddleware() {
   const isInitialized = ref(false)
@@ -24,13 +24,21 @@ export function useAuthMiddleware() {
     const authorizedOnly = to.matched.some((record) => {
       return record.meta.authorizedOnly
     })
+
     if (authorizedOnly && !authStore.signedIn) {
       nextParam = `/?redirect=${encodeURI(to.fullPath)}`
     }
 
-    if (from.path === nextParam) {
-      return next(false)
+    const nonAuthorizedOnly = to.matched.some(
+      (record) => record.meta.nonAuthorizedOnly
+    )
+    if (nonAuthorizedOnly && authStore.signedIn && !isSignoutLoading.value) {
+      nextParam = '/'
     }
+
+    // if (from.path === nextParam) {
+    //   return next(false)
+    // }
 
     if (nextParam !== undefined) {
       return next(nextParam)

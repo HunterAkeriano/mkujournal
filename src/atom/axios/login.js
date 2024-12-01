@@ -48,3 +48,15 @@ export async function registration(
 export async function logout() {
   return handleRequest('/auth/logout')
 }
+
+export async function checkResetToken(token) {
+  return handleRequest('/auth/check-reset-token', { token }, 'GET')
+}
+
+export async function setNewPassword(resetToken, newPassword) {
+  return handleRequest(
+    '/auth/set-new-password',
+    { resetToken, newPassword },
+    'POST'
+  )
+}

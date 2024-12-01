@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../../views/HomeView.vue'
 import UserProfile from '@/views/profile/UserProfile.vue'
 import { useModalStorage } from '@/plugin/stores/modal-storage.js'
+import ResetPassword from '@/views/ResetPassword.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,6 +16,14 @@ const router = createRouter({
       path: '/profile',
       name: 'profile',
       component: UserProfile,
+    },
+    {
+      path: '/reset-password/:id',
+      name: 'reset-password',
+      meta: {
+        nonAuthorizedOnly: true,
+      },
+      component: ResetPassword,
     },
     {
       path: '/test',

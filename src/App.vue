@@ -1,11 +1,12 @@
 <script setup>
-import { RouterView } from 'vue-router'
+import { RouterView, useRoute } from 'vue-router'
 import TheHeader from '@/organisms/header/TheHeader.vue'
 import IconsManager from '@/organisms/icons-manager/IconsManager.vue'
 import BaseIcon from '@/molecules/base-icon/BaseIcon.vue'
 import { ref } from 'vue'
 
 const isActiveScroll = ref(false)
+const route = useRoute()
 
 const appHeight = () => {
   const doc = document.documentElement
@@ -33,9 +34,11 @@ function scrollToTop() {
 </script>
 
 <template>
-  <TheHeader />
+  <TheHeader v-if="route.name !== 'reset-password'" />
 
-  <RouterView />
+  <main>
+    <RouterView />
+  </main>
 
   <div class="container">
     <div
