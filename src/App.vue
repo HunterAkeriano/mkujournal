@@ -34,7 +34,9 @@ function scrollToTop() {
 </script>
 
 <template>
-  <TheHeader v-if="route.name !== 'reset-password'" />
+  <TheHeader
+    v-if="route.name !== 'reset-password' && route.name !== 'not-found'"
+  />
 
   <main>
     <RouterView />

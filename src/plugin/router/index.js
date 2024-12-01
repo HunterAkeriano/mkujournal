@@ -3,6 +3,7 @@ import HomeView from '../../views/HomeView.vue'
 import UserProfile from '@/views/profile/UserProfile.vue'
 import { useModalStorage } from '@/plugin/stores/modal-storage.js'
 import ResetPassword from '@/views/ResetPassword.vue'
+import NotFoundPage from '@/views/NotFoundPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,6 +30,11 @@ const router = createRouter({
       path: '/test',
       name: 'test',
       component: () => import('@/views/Test.vue'),
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: NotFoundPage,
     },
   ],
 
