@@ -1,0 +1,71 @@
+import { computed, ref } from 'vue'
+import { defineStore } from 'pinia'
+import { useApi, RequestAccumulator, CookieItemType } from '@/shared'
+
+import { AuthApi, useCookiesStorage } from '@/shared'
+
+const USER_IS_NOT_LOGGED_IN_ERROR = new Error('user is not logged in')
+
+export const useAuthStore = defineStore('auth', () => {
+  const authApi = useApi(AuthApi)
+
+  const accessStorage = useCookiesStorage('access_token')
+  const refreshStorage = useCookiesStorage('refresh_token')
+
+  const { value: accessToken, setValue: setAccessToken } =
+    getAuthInfo(accessStorage)
+  const { value: refreshToken, setValue: setRefreshToken } =
+    getAuthInfo(refreshStorage)
+
+  const refreshTokensRequestAccumulator = new RequestAccumulator(
+    async () =>
+      await authApi.authRefreshTokenPost({
+        authRefreshTokenPostRequest: { refreshToken: refreshToken.value || '' },
+      })
+  )
+
+  function setTokens(at?: string | null, rt?: string | null) {
+    setAccessToken(at, 'regular')
+    setRefreshToken(rt, 'regular')
+  }
+
+  async function refreshTokens() {
+    const refresh = refreshToken.value
+    if (!refresh) {
+      throw USER_IS_NOT_LOGGED_IN_ERROR
+    }
+
+    try {
+      const { data } = await refreshTokensRequestAccumulator.request()
+
+      setTokens(data?.accessToken, data?.refreshToken)
+    } catch (e) {
+      reset()
+      throw e
+    }
+  }
+
+  function reset() {
+    setTokens(null, null)
+  }
+
+  return {
+    accessToken,
+    refreshTokens,
+  }
+})
+
+function getAuthInfo(storage: ReturnType<typeof useCookiesStorage>) {
+  const _token = ref(storage.getItem() || null)
+  const tokenValueGetter = computed<string | null>(() => _token.value)
+
+  const setTokenValue = (value?: string | null, type?: CookieItemType) => {
+    storage.setItem(value, type)
+    _token.value = value
+  }
+
+  return {
+    value: tokenValueGetter,
+    setValue: setTokenValue,
+  }
+}
