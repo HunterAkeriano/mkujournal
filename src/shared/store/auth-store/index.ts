@@ -1,6 +1,12 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { useApi, RequestAccumulator, CookieItemType } from '@/shared'
+import {
+  useApi,
+  RequestAccumulator,
+  CookieItemType,
+  ProfileInfoGet200Response,
+  ProfileApi,
+} from '@/shared'
 
 import { AuthApi, useCookiesStorage } from '@/shared'
 
@@ -8,6 +14,8 @@ const USER_IS_NOT_LOGGED_IN_ERROR = new Error('user is not logged in')
 
 export const useAuthStore = defineStore('auth', () => {
   const authApi = useApi(AuthApi)
+  const profileApi = useApi(ProfileApi)
+  const user = ref<ProfileInfoGet200Response | null>(null)
 
   const accessStorage = useCookiesStorage('access_token')
   const refreshStorage = useCookiesStorage('refresh_token')
@@ -49,9 +57,16 @@ export const useAuthStore = defineStore('auth', () => {
     setTokens(null, null)
   }
 
+  function getProfile() {
+    //todo: написать детейл профиля
+  }
+
   return {
     accessToken,
     refreshTokens,
+    profileApi,
+    user,
+    getProfile,
   }
 })
 
