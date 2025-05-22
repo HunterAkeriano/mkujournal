@@ -107,7 +107,7 @@ export const setOAuthToObject = async function (
       typeof configuration.accessToken === 'function'
         ? await configuration.accessToken(name, scopes)
         : await configuration.accessToken
-    object['Authorization'] = 'Bearer ' + localVarAccessTokenValue
+    object['authorization'] = localVarAccessTokenValue
   }
 }
 
