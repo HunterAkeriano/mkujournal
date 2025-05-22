@@ -30,7 +30,7 @@ export function useApi<T extends BaseAPI>(apiConstructor: ApiConstructor<T>) {
   const options = optionsStorage.getApiOptions()
 
   const conf = new Configuration({
-    accessToken: options.getAccessToken,
+    authorization: options.getAccessToken,
   })
 
   const axiosInstance = axios.create()
