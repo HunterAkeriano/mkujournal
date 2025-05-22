@@ -30,7 +30,7 @@ export function useApi<T extends BaseAPI>(apiConstructor: ApiConstructor<T>) {
   const options = optionsStorage.getApiOptions()
 
   const conf = new Configuration({
-    authorization: options.getAccessToken,
+    accessToken: options.getAccessToken,
   })
 
   const axiosInstance = axios.create()
@@ -78,7 +78,7 @@ export function useApi<T extends BaseAPI>(apiConstructor: ApiConstructor<T>) {
 
       const newAccessToken = options.getAccessToken()
       if (newAccessToken) {
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
+        originalRequest.headers.authorization = `Bearer ${newAccessToken}`
       }
 
       originalRequest.headers.RepeatRequest = true
