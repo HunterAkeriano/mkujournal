@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import { MainPage } from '@/pages'
+import Login from '@/pages/auth/Login.vue'
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
@@ -7,6 +8,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
     name: 'home',
     component: MainPage,
   },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login,
+  },
+
 ]
 
 const router = createRouter({

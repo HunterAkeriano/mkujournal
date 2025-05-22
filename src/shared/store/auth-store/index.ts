@@ -32,9 +32,9 @@ export const useAuthStore = defineStore('auth', () => {
       })
   )
 
-  function setTokens(at?: string | null, rt?: string | null) {
-    setAccessToken(at, 'regular')
-    setRefreshToken(rt, 'regular')
+  function setTokens(accessToken?: string | null, refreshToken?: string | null) {
+    setAccessToken(accessToken, 'regular')
+    setRefreshToken(refreshToken, 'regular')
   }
 
   async function refreshTokens() {
@@ -67,6 +67,7 @@ export const useAuthStore = defineStore('auth', () => {
     profileApi,
     user,
     getProfile,
+    setTokens
   }
 })
 
