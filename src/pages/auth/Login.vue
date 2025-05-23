@@ -8,8 +8,8 @@ import { useRouter } from 'vue-router'
 
 
 
-const valueEmail = ref('')
-const valuePassword = ref('')
+const valueEmail = ref('dimonmoy@meta.ua')
+const valuePassword = ref('12345678')
 const api = useApi(AuthApi)
 
 const authStore = useAuthStore()
@@ -24,7 +24,8 @@ async function loginSubmit() {
       },
     })
     authStore.setTokens(data.accessToken, data.refreshToken)
-   await roter.push('/')
+
+    await authStore.getProfile()
   } catch (e) {
     console.log(e)
   }
