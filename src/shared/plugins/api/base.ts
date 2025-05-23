@@ -78,7 +78,7 @@ export function useApi<T extends BaseAPI>(apiConstructor: ApiConstructor<T>) {
 
       const newAccessToken = options.getAccessToken()
       if (newAccessToken) {
-        originalRequest.headers.authorization = `${newAccessToken}`
+        originalRequest.headers.Authorization = `${newAccessToken}`
       }
 
       originalRequest.headers.RepeatRequest = true

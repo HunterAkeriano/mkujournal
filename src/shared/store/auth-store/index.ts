@@ -57,8 +57,10 @@ export const useAuthStore = defineStore('auth', () => {
     setTokens(null, null)
   }
 
-  function getProfile() {
-    //todo: написать детейл профиля
+  async function getProfile() {
+    const {data} = await profileApi.profileInfoGet()
+
+    user.value = data
   }
 
   return {
