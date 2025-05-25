@@ -45,8 +45,13 @@ export function useApi<T extends BaseAPI>(apiConstructor: ApiConstructor<T>) {
   }
 
   function configureRequest(config: InternalAxiosRequestConfig) {
+    const token = options.getAccessToken()
+    if (token) {
+      config.headers.Authorization = `${token}`
+    }
     return config
   }
+
 
   async function handleError(error: AxiosError<InnerAxiosError>) {
     const token = options.getAccessToken()
