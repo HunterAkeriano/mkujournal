@@ -1,9 +1,12 @@
 <script setup lang="ts">
+
 import Input from '@/components/input/Input.vue'
 import { ref } from 'vue'
 import { AuthApi, useApi } from '@/shared'
 import { useAuthStore } from '@/shared/store/auth-store'
 import { useRouter } from 'vue-router'
+
+
 
 const valueEmail = ref('dimonmoy@meta.ua')
 const valuePassword = ref('12345678')
@@ -29,14 +32,18 @@ async function loginSubmit() {
     console.log(e)
   }
 }
+
 </script>
 
 <template>
-  <Input type="email" v-model="valueEmail" />
-  <Input type="password" v-model="valuePassword" />
+
+  <Input type="email" v-model="valueEmail"/>
+  <Input type="password" v-model="valuePassword"/>
   <button @click="loginSubmit">Login</button>
-  {{ valuePassword }}
-  {{ valueEmail }}
+  {{ valuePassword}}
+  {{valueEmail}}
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>

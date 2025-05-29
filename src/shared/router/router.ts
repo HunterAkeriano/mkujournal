@@ -3,6 +3,7 @@ import DefaultLayout from '@/layuots/default-layout/DefaultLayout.vue'
 import AuthLayout from '@/layuots/auth-layout/AuthLayout.vue'
 import { useAuthStore } from '../store/auth-store'
 import { MainPage } from '@/pages'
+import Login from '@/pages/auth/Login.vue'
 import AccountPage from '@/pages/account/AccountPage.vue'
 import Login from '@/pages/auth/Login.vue'
 
@@ -41,6 +42,12 @@ const routes: Readonly<RouteRecordRaw[]> = [
       },
     ],
   },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login,
+  },
+
 ]
 
 const router = createRouter({
