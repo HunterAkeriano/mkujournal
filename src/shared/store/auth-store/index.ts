@@ -32,7 +32,10 @@ export const useAuthStore = defineStore('auth', () => {
       })
   )
 
-  function setTokens(accessToken?: string | null, refreshToken?: string | null) {
+  function setTokens(
+    accessToken?: string | null,
+    refreshToken?: string | null
+  ) {
     setAccessToken(accessToken, 'regular')
     setRefreshToken(refreshToken, 'regular')
   }
@@ -69,7 +72,7 @@ export const useAuthStore = defineStore('auth', () => {
     profileApi,
     user,
     getProfile,
-    setTokens
+    setTokens,
   }
 })
 

@@ -26,6 +26,8 @@ async function loginSubmit() {
     authStore.setTokens(data.accessToken, data.refreshToken)
 
     await authStore.getProfile()
+
+    await roter.push({ name: 'account' })
   } catch (e) {
     console.log(e)
   }
