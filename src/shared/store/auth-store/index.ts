@@ -61,9 +61,13 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function getProfile() {
-    const {data} = await profileApi.profileInfoGet()
+    try {
+      const { data } = await profileApi.profileInfoGet()
 
-    user.value = data
+      user.value = data
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return {
